@@ -37,3 +37,9 @@
 1. `my_app -l -p 8080 -d /some/path`. 解析后得到的数据分别为：`logging: True`，`port: 8080`，`directory: /some/path`.
 2. `my_app -g this is a list -d 1 2 -3 5`. 解析后得到的数据分别为：`group: ["this", "is", "a", "list"]`，`digit: [1, 2, -3, 5]`.
 
+### 2. 大致构思功能的实现方式，划分所需的组件（Component）以及组件间的关系（所谓的架构）
+
+这一步如果暂时还没有思路可以省略。
+
+到目前来看我们大概知道需要对参数依据空格进行拆分，对拆分后的部分按照规则再进行分析。
+
