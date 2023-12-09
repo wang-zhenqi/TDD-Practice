@@ -34,3 +34,7 @@ class TestOmittedArgument:
 
     def test_no_argument_presented(self, default_values):
         assert default_values == parse_arg("")
+
+    def test_single_argument_with_single_boolean_values(self, default_values):
+        default_values[0] = True
+        assert default_values == parse_arg("-l")
