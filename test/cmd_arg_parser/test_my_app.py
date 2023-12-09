@@ -1,6 +1,6 @@
 import pytest
 
-from cmd_arg_parser.src.my_app import parse_arg
+from cmd_arg_parser.src.my_app import parse_arg, Options
 
 """
 - Happy path:
@@ -30,28 +30,28 @@ Sad path:
 
 @pytest.fixture
 def default_values():
-    return [False, 0, "", [], []]
+    return Options()
 
 class TestOmittedArgument:
     def test_no_argument_presented(self, default_values):
-        assert default_values == parse_arg("")
+        assert default_values == parse_arg([])
 
 class TestSingleArgumentWithSingleValues:
     def test_single_argument_with_single_boolean_values(self, default_values):
-        default_values[0] = True
-        assert default_values == parse_arg("-l")
+        default_values.logging = True
+        assert default_values == parse_arg(["-l"])
 
     def test_single_argument_with_single_integer_values(self, default_values):
-        default_values[1] = 8080
-        assert default_values == parse_arg("-p 8080")
+        default_values.port = 8080
+        assert default_values == parse_arg(["-p", "8080"])
 
     def test_single_argument_with_single_string_values(self, default_values):
-        default_values[2] = "/some/path"
-        assert default_values == parse_arg("-d /some/path")
+        default_values.directory = "/some/path"
+        assert default_values == parse_arg(["-d", "/some/path"])
 
 class TestMultipleSingleValuedArguments:
     def test_multiple_single_valued_arguments(self, default_values):
-        default_values[0] = True
-        default_values[1] = 8080
-        default_values[2] = "/some/path"
-        assert default_values == parse_arg("-l -p 8080 -d /some/path")
+        default_values.logging = True
+        default_values.port = 8080
+        default_values.directory = "/some/path"
+        assert default_values == parse_arg(["-d", "/some/path", "-l", "-p", "8080"])

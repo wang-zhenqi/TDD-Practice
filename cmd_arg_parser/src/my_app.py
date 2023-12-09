@@ -1,11 +1,26 @@
-def parse_arg(args: str):
-    return_values = [False, 0, "", [], []]
-    arg_list = args.split("-")
-    for arg in arg_list:
-        if arg.startswith("l"):
-            return_values[0] = True
-        if arg.startswith("p"):
-            return_values[1] = int(arg[2:])
-        if arg.startswith("d"):
-            return_values[2] = arg[2:]
-    return return_values
+import sys
+from typing import List
+from pydantic import BaseModel
+
+
+class Options(BaseModel):
+    logging: bool = False
+    port: int = 0
+    directory: str = ""
+    group: List = []
+    digits: List[int] = []
+
+
+def parse_arg(arguments: List[str]):
+    options = Options()
+    for index, arg in enumerate(iter(arguments)):
+        if "-l" == arg:
+            options.logging = True
+        if "-p" == arg:
+            options.port = int(arguments[index + 1])
+        if "-d" == arg:
+            options.directory = arguments[index + 1]
+    return options
+
+if __name__ == "__main__":
+    print(parse_arg(sys.argv[1:]))
