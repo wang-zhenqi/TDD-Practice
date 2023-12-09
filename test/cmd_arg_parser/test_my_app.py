@@ -44,3 +44,7 @@ class TestOmittedArgument:
     def test_single_argument_with_single_integer_values(self, default_values):
         default_values[1] = 8080
         assert default_values == parse_arg("-p 8080")
+
+    def test_single_argument_with_single_string_values(self, default_values):
+        default_values[2] = "/some/path"
+        assert default_values == parse_arg("-d /some/path")
