@@ -43,3 +43,37 @@
 
 到目前来看我们大概知道需要对参数依据空格进行拆分，对拆分后的部分按照规则再进行分析。
 
+### 3. 根据需求的功能描述拆分功能点，功能点要考虑正确路径（Happy Path）和边界条件（Sad Path）
+
+这一步非常重要，是否能正确拆分功能点，决定了要写哪些测试样例。
+
+#### Happy Path
+
+* `my_app`
+* `my_app -l`
+* `my_app -p 8080`
+* `my_app -d /some/path`
+* `my_app -l -p 8080 -d /some/path`
+* `my_app -g this is a list`
+* `my_app -d 1 2 -3 5`
+* `my_app -g this is a list -d 1 2 -3 5`
+
+#### Sad Path
+
+* `my_app -l 1`: -l 选项不带数值
+* `my_app -p`: -p 选项需要数值
+* `my_app -p abcd`: -p 选项需要整型数值
+* `my_app -d 10 abc true`: -d 选项在有多个数值时，要求每个数值均为整型
+
+在边界条件中，需要给出提示，指明为什么参数与模式不匹配。
+
+#### 默认值
+
+* boolean: false
+* integer: 0
+* string: ""
+* list: []
+
+### 4. 依照组件以及组件间的关系，将功能拆分到对应组件
+
+暂略
