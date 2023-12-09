@@ -8,19 +8,19 @@
 > 
 > `-l -p 8080 -d /usr/logs`
 > 
-> * “l”（日志）没有相关的值，它是一个布尔标志，如果存在则为 true，不存在则为 false。
+> - “l”（日志）没有相关的值，它是一个布尔标志，如果存在则为 true，不存在则为 false。
 > 
-> * “p”（端口）有一个整数值。
+> - “p”（端口）有一个整数值。
 > 
-> * “d”（目录）有一个字符串值。
+> - “d”（目录）有一个字符串值。
 > 
 > 标志后面如果存在多个值，则该标志表示一个列表：
 > 
 > `-g this is a list -d 1 2 -3 5`
 > 
-> * "g"表示一个字符串列表[“this”, “is”, “a”, “list”]。
+> - "g"表示一个字符串列表[“this”, “is”, “a”, “list”]。
 > 
-> * “d"标志表示一个整数列表[1, 2, -3, 5]。
+> - “d"标志表示一个整数列表[1, 2, -3, 5]。
 > 
 > 如果参数中没有指定某个标志，那么解析器应该指定一个默认值。例如，false 代表布尔值，0 代表数字，”"代表字符串，[]代表列表。如果给出的参数与模式不匹配，重要的是给出一个好的错误信息，准确地解释什么是错误的。
 > 
@@ -49,30 +49,30 @@
 
 #### Happy Path
 
-* `my_app`
-* `my_app -l`
-* `my_app -p 8080`
-* `my_app -d /some/path`
-* `my_app -l -p 8080 -d /some/path`
-* `my_app -g this is a list`
-* `my_app -d 1 2 -3 5`
-* `my_app -g this is a list -d 1 2 -3 5`
+- `my_app`
+- `my_app -l`
+- `my_app -p 8080`
+- `my_app -d /some/path`
+- `my_app -l -p 8080 -d /some/path`
+- `my_app -g this is a list`
+- `my_app -d 1 2 -3 5`
+- `my_app -g this is a list -d 1 2 -3 5`
 
 #### Sad Path
 
-* `my_app -l 1`: -l 选项不带数值
-* `my_app -p`: -p 选项需要数值
-* `my_app -p abcd`: -p 选项需要整型数值
-* `my_app -d 10 abc true`: -d 选项在有多个数值时，要求每个数值均为整型
+- `my_app -l 1`: -l 选项不带数值
+- `my_app -p`: -p 选项需要数值
+- `my_app -p abcd`: -p 选项需要整型数值
+- `my_app -d 10 abc true`: -d 选项在有多个数值时，要求每个数值均为整型
 
 在边界条件中，需要给出提示，指明为什么参数与模式不匹配。
 
 #### 默认值
 
-* boolean: false
-* integer: 0
-* string: ""
-* list: []
+- boolean: false
+- integer: 0
+- string: ""
+- list: []
 
 ### 4. 依照组件以及组件间的关系，将功能拆分到对应组件
 
