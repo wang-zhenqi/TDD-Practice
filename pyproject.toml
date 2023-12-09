@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "tdd-practice"
+version = "0.1.0"
+description = "In this repository, there are source about how to implement TDD strategy. I'll keep track of the code evolution to demonstrate how TDD is applied."
+authors = ["Zhenqi Wang"]
+readme = "README.md"
+packages = [{include = "tdd_practice"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pytest = "^7.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
