@@ -28,15 +28,15 @@ Sad path:
 """
 
 
+@pytest.fixture
+def default_values():
+    return [False, 0, "", [], []]
+
 class TestOmittedArgument:
-
-    @pytest.fixture
-    def default_values(self):
-        return [False, 0, "", [], []]
-
     def test_no_argument_presented(self, default_values):
         assert default_values == parse_arg("")
 
+class TestSingleArgumentWithSingleValues:
     def test_single_argument_with_single_boolean_values(self, default_values):
         default_values[0] = True
         assert default_values == parse_arg("-l")
@@ -48,3 +48,10 @@ class TestOmittedArgument:
     def test_single_argument_with_single_string_values(self, default_values):
         default_values[2] = "/some/path"
         assert default_values == parse_arg("-d /some/path")
+
+class TestMultipleSingleValuedArguments:
+    def test_multiple_single_valued_arguments(self, default_values):
+        default_values[0] = True
+        default_values[1] = 8080
+        default_values[2] = "/some/path"
+        assert default_values == parse_arg("-l -p 8080 -d /some/path")
