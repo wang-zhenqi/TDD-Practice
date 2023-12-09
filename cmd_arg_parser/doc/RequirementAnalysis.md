@@ -49,14 +49,21 @@
 
 #### Happy Path
 
-- `my_app`
-- `my_app -l`
-- `my_app -p 8080`
-- `my_app -d /some/path`
-- `my_app -l -p 8080 -d /some/path`
-- `my_app -g this is a list`
-- `my_app -d 1 2 -3 5`
-- `my_app -g this is a list -d 1 2 -3 5`
+- omitted argument
+    - `my_app`
+- single argument with single values
+    - `my_app -l`
+    - `my_app -p 8080`
+    - `my_app -d /some/path`
+- multiple single-valued arguments
+    - `my_app -l -p 8080 -d /some/path`
+- single list-valued argument
+    - `my_app -g this is a list`
+    - `my_app -d 1 2 -3 5`
+- multiple list-valued arguments
+    - `my_app -g this is a list -d 1 2 -3 5`
+- put them all together
+    - `my_app -l -p 8080 -d /some/path -g this is a list -d 1 2 -3 5`
 
 #### Sad Path
 
@@ -77,3 +84,7 @@
 ### 4. 依照组件以及组件间的关系，将功能拆分到对应组件
 
 暂略
+
+### 5. 针对拆分的结果编写测试，进入红 / 绿 / 重构循环
+
+具体代码见 "test/cmd_arg_parser"
