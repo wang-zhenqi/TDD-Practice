@@ -1,2 +1,2 @@
 def parse_arg(args: str):
-    return []
+    return [False, 0, "", [], []]
