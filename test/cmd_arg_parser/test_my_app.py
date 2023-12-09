@@ -40,3 +40,7 @@ class TestOmittedArgument:
     def test_single_argument_with_single_boolean_values(self, default_values):
         default_values[0] = True
         assert default_values == parse_arg("-l")
+
+    def test_single_argument_with_single_integer_values(self, default_values):
+        default_values[1] = 8080
+        assert default_values == parse_arg("-p 8080")
