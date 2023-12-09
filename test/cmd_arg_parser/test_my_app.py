@@ -33,6 +33,4 @@ class TestOmittedArgument:
         return [False, 0, "", [], []]
 
     def test_no_argument_presented(self, default_values):
-        expected = default_values
-        actual = parse_arg("")
-        assert expected == actual
+        assert default_values == parse_arg("")
