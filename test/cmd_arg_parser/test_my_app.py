@@ -1,4 +1,5 @@
 import pytest
+
 from cmd_arg_parser.src.my_app import parse_arg
 
 """
@@ -25,6 +26,7 @@ Sad path:
 - `my_app -p abcd`
 - `my_app -d 10 abc true`
 """
+
 
 class TestOmittedArgument:
 

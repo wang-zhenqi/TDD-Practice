@@ -1,5 +1,5 @@
 def parse_arg(args: str):
-    default_values = [False, 0, "", [], []]
+    return_values = [False, 0, "", [], []]
     if "-l" in args:
-        default_values[0] = True
-    return default_values
+        return_values[0] = True
+    return return_values
