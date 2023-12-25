@@ -1,5 +1,6 @@
 import sys
 from typing import List
+
 from pydantic import BaseModel
 
 
@@ -17,17 +18,23 @@ def parse_arg(arguments: List[str]):
     return options
 
 
+def parse_value(i, arguments, parse_func):
+    if parse_func == bool:
+        return True
+    return parse_func(arguments[i + 1])
+
+
 def process_arg_list(arguments, options):
     arg_mapping = {
-        "-l": ("logging", lambda i: True),
-        "-p": ("port", lambda i: int(arguments[i + 1])),
-        "-d": ("directory", lambda i: arguments[i + 1]),
+        "-l": "logging",
+        "-p": "port",
+        "-d": "directory",
     }
 
     for index, arg in enumerate(iter(arguments)):
         if arg in arg_mapping:
-            attr, method = arg_mapping[arg]
-            setattr(options, attr, method(index))
+            options.__setattr__(arg_mapping[arg], parse_value(index, arguments, Options.__annotations__[
+                arg_mapping[arg]]))
 
 
 if __name__ == "__main__":
