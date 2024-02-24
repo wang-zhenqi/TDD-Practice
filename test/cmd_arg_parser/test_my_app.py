@@ -1,6 +1,6 @@
 import pytest
 
-from cmd_arg_parser.src.my_app import process_arg_list, Options
+from cmd_arg_parser.src.my_app import process_arguments, Options
 
 """
 - Happy path:
@@ -34,24 +34,24 @@ def default_values():
 
 class TestOmittedArgument:
     def test_no_argument_presented(self, default_values):
-        assert default_values == process_arg_list([])
+        assert default_values == process_arguments([])
 
 class TestSingleArgumentWithSingleValues:
     def test_single_argument_with_single_boolean_values(self, default_values):
         default_values.logging = True
-        assert default_values == process_arg_list(["-l"])
+        assert default_values == process_arguments(["-l"])
 
     def test_single_argument_with_single_integer_values(self, default_values):
         default_values.port = 8080
-        assert default_values == process_arg_list(["-p", "8080"])
+        assert default_values == process_arguments(["-p", "8080"])
 
     def test_single_argument_with_single_string_values(self, default_values):
         default_values.directory = "/some/path"
-        assert default_values == process_arg_list(["-d", "/some/path"])
+        assert default_values == process_arguments(["-d", "/some/path"])
 
 class TestMultipleSingleValuedArguments:
     def test_multiple_single_valued_arguments(self, default_values):
         default_values.logging = True
         default_values.port = 8080
         default_values.directory = "/some/path"
-        assert default_values == process_arg_list(["-d", "/some/path", "-l", "-p", "8080"])
+        assert default_values == process_arguments(["-d", "/some/path", "-l", "-p", "8080"])

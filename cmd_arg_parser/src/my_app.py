@@ -4,6 +4,8 @@ from typing import List
 
 from pydantic import BaseModel
 
+from OptionParser import ParserFactory
+
 
 class Options(BaseModel):
     logging: bool = False
@@ -13,29 +15,26 @@ class Options(BaseModel):
     digits: List[int] = []
 
 
-def process_arg_list(arguments: List[str]):
+option_fields_map = {
+    "-l": "logging",
+    "-p": "port",
+    "-d": "directory",
+}
+
+
+def process_arguments(arguments_list: List[str]):
     options = Options()
 
-    arg_mapping = {
-        "-l": "logging",
-        "-p": "port",
-        "-d": "directory",
-    }
+    for index, arg in enumerate(iter(arguments_list)):
+        if arg in option_fields_map:
+            option_parser = ParserFactory().get_parser_by_option_type(
+                option_type=typing.get_type_hints(Options).get(option_fields_map[arg])
+            )
 
-    for index, arg in enumerate(iter(arguments)):
-        def parse_value(arg_type):
-            if arg_type == bool:
-                return True
-            return arg_type(arguments[index + 1])
-
-        def get_field_type():
-            return typing.get_type_hints(Options).get(arg_mapping[arg])
-
-        if arg in arg_mapping:
-            setattr(options, arg_mapping[arg], parse_value(get_field_type()))
+            setattr(options, option_fields_map[arg], option_parser.parse(index, arguments_list))
 
     return options
 
 
 if __name__ == "__main__":
-    print(process_arg_list(sys.argv[1:]))
+    print(process_arguments(sys.argv[1:]))
