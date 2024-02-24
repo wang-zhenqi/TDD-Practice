@@ -1,6 +1,5 @@
 import sys
-import typing
-from typing import List
+from typing import List, get_type_hints
 
 from pydantic import BaseModel
 
@@ -28,7 +27,7 @@ def process_arguments(arguments_list: List[str]):
     for index, arg in enumerate(iter(arguments_list)):
         if arg in option_fields_map:
             option_parser = ParserFactory().get_parser_by_option_type(
-                option_type=typing.get_type_hints(Options).get(option_fields_map[arg])
+                option_type=get_type_hints(Options).get(option_fields_map[arg])
             )
 
             setattr(options, option_fields_map[arg], option_parser.parse(index, arguments_list))
