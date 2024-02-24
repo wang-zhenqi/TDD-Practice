@@ -1,4 +1,5 @@
 import sys
+import typing
 from typing import List
 
 from pydantic import BaseModel
@@ -12,12 +13,6 @@ class Options(BaseModel):
     digits: List[int] = []
 
 
-def parse_value(i, arguments, parse_func):
-    if parse_func == bool:
-        return True
-    return parse_func(arguments[i + 1])
-
-
 def process_arg_list(arguments: List[str]):
     options = Options()
 
@@ -28,15 +23,17 @@ def process_arg_list(arguments: List[str]):
     }
 
     for index, arg in enumerate(iter(arguments)):
+        def parse_value(arg_type):
+            if arg_type == bool:
+                return True
+            return arg_type(arguments[index + 1])
+
+        def get_field_type():
+            return typing.get_type_hints(Options).get(arg_mapping[arg])
+
         if arg in arg_mapping:
-            options.__setattr__(
-                arg_mapping[arg],
-                parse_value(
-                    index,
-                    arguments,
-                    Options.__annotations__[arg_mapping[arg]]
-                )
-            )
+            setattr(options, arg_mapping[arg], parse_value(get_field_type()))
+
     return options
 
 
