@@ -14,17 +14,18 @@ from cmd_arg_parser.src.my_app import process_arguments, Options
         - `my_app -l -p 8080 -d /some/path`
     - single list-valued argument
         - `my_app -g this is a list`
-        - `my_app -d 1 2 -3 5`
+        - `my_app -D 1 2 -3 5`
     - multiple list-valued arguments
-        - `my_app -g this is a list -d 1 2 -3 5`
+        - `my_app -g this is a list -D 1 2 -3 5`
     - put them all together
-        - `my_app -l -p 8080 -d /some/path -g this is a list -d 1 2 -3 5`
+        - `my_app -g this is a list -l -d /some/path -D 1 2 -3 5 -p 8080`
 
 Sad path:
 - `my_app -l 1`
 - `my_app -p`
+- `my_app -d -D 1`
 - `my_app -p abcd`
-- `my_app -d 10 abc true`
+- `my_app -D 10 abc true`
 """
 
 
