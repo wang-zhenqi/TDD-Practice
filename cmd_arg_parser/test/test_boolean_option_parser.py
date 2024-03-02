@@ -1,6 +1,7 @@
 import pytest
 
-from OptionParserFactory import OptionParserFactory
+from Exceptions.TooManyArgumentsException import TooManyArgumentsException
+from Parsers.OptionParserFactory import OptionParserFactory
 
 """
 - BooleanOptionParser
@@ -16,6 +17,6 @@ class TestBooleanOptionParser:
         [0, ["-l", "2", "x"]],
     ])
     def test_should_raise_exception_when_it_passes_any_argument(self, index, argument_list):
-        with pytest.raises(TypeError):
+        with pytest.raises(TooManyArgumentsException):
             boolean_option_parser = OptionParserFactory().get_parser_by_option_type(bool)
             boolean_option_parser.parse(index, argument_list)
