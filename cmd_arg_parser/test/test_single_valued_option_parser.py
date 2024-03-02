@@ -11,6 +11,7 @@ from Parsers.SingleValuedOptionParser import SingleValuedOptionParser
         - `my_app -d`
         - `my_app -l -d`
         - `my_app -d -l`
+        - `my_app -p abcd`
 """
 
 
