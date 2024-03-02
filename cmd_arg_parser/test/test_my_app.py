@@ -24,8 +24,9 @@ from cmd_arg_parser.src.my_app import process_arguments, Options
     - BooleanOptionParser
         - `my_app -l 1`
         - `my_app -l 2 x`
-- `my_app -p`
-- `my_app -d -D 1`
+    - SingleValuedOptionParser
+        - `my_app -p`
+        - `my_app -d -D 1`
 - `my_app -p abcd`
 - `my_app -D 10 abc true`
 """
