@@ -3,7 +3,7 @@ from typing import List, get_type_hints
 
 from pydantic import BaseModel
 
-from OptionParserFactory import OptionParserFactory
+from Parsers.OptionParserFactory import OptionParserFactory
 
 
 class Options(BaseModel):
