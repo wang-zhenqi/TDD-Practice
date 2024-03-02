@@ -20,8 +20,10 @@ from cmd_arg_parser.src.my_app import process_arguments, Options
     - put them all together
         - `my_app -g this is a list -l -d /some/path -D 1 2 -3 5 -p 8080`
 
-Sad path:
-- `my_app -l 1`
+- Sad path:
+    - BooleanOptionParser
+        - `my_app -l 1`
+        - `my_app -l 2 x`
 - `my_app -p`
 - `my_app -d -D 1`
 - `my_app -p abcd`
@@ -33,9 +35,11 @@ Sad path:
 def default_values():
     return Options()
 
+
 class TestOmittedArgument:
     def test_no_argument_presented(self, default_values):
         assert default_values == process_arguments([])
+
 
 class TestSingleArgumentWithSingleValues:
     def test_single_argument_with_single_boolean_values(self, default_values):
@@ -49,6 +53,7 @@ class TestSingleArgumentWithSingleValues:
     def test_single_argument_with_single_string_values(self, default_values):
         default_values.directory = "/some/path"
         assert default_values == process_arguments(["-d", "/some/path"])
+
 
 class TestMultipleSingleValuedArguments:
     def test_multiple_single_valued_arguments(self, default_values):

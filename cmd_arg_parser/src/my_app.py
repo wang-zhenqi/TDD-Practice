@@ -3,7 +3,7 @@ from typing import List, get_type_hints
 
 from pydantic import BaseModel
 
-from OptionParser import ParserFactory
+from OptionParserFactory import OptionParserFactory
 
 
 class Options(BaseModel):
@@ -26,7 +26,7 @@ def process_arguments(arguments_list: List[str]):
 
     for index, arg in enumerate(iter(arguments_list)):
         if arg in option_fields_map:
-            option_parser = ParserFactory().get_parser_by_option_type(
+            option_parser = OptionParserFactory().get_parser_by_option_type(
                 option_type=get_type_hints(Options).get(option_fields_map[arg])
             )
 
