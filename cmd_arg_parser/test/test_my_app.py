@@ -42,20 +42,6 @@ class TestOmittedArgument:
         assert default_values == process_arguments([])
 
 
-class TestSingleArgumentWithSingleValues:
-    def test_single_argument_with_single_boolean_values(self, default_values):
-        default_values.logging = True
-        assert default_values == process_arguments(["-l"])
-
-    def test_single_argument_with_single_integer_values(self, default_values):
-        default_values.port = 8080
-        assert default_values == process_arguments(["-p", "8080"])
-
-    def test_single_argument_with_single_string_values(self, default_values):
-        default_values.directory = "/some/path"
-        assert default_values == process_arguments(["-d", "/some/path"])
-
-
 class TestMultipleSingleValuedArguments:
     def test_multiple_single_valued_arguments(self, default_values):
         default_values.logging = True

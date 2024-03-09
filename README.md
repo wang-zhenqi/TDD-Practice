@@ -8,7 +8,7 @@
 
 具体的分析以及实现过程见[命令行参数解析 - 任务分析](cmd_arg_parser/doc/RequirementAnalysis.md)
 
-### 操作记录
+### 实现单参数选项的 Happy Path
 
 在完成 Happy Path 的过程中，有以下几个值得记录的转折点：
 1. 将 arguments 作为字符串来处理
@@ -80,3 +80,11 @@ def process_arguments(arguments_list: List[str]):
 </table>
 
 可以看到，函数中嵌套定义的函数会让代码看起来很不美观。另外前者的 `parse_value` 方法也缺乏灵活性。关于灵活性，在目前的代码中，也许还不是大问题，也不需要过度设计，但是在未来程序变复杂后，这里迟早是要改掉的。
+
+### 实现单参数选项的 Sad Path
+
+这里的实现比较简单，主要就是新增了一些 Exception 的定义。后将 Parser 重构了一下，由工厂类接收选项的类型，生成不同的 parser。
+
+### 重新安排测试用例
+
+在开始多参数选项的开发前，由于我们新增了各种 Parser，因此可以将原本面向整个实现（my_app.process_arguments()）的测试转移到更为细化的不同 parser.parse() 中去。测试范围更小会使得代码更加可控，更容易定位问题。

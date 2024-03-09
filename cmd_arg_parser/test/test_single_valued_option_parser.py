@@ -5,17 +5,28 @@ from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 from Parsers.SingleValuedOptionParser import SingleValuedOptionParser
 
 """
+- Happy Path
+    - single argument with single values
+        - `my_app -p 8080`
+        - `my_app -d /some/path`
 - Sad Path
-    - SingleValuedOptionParser
-        - `my_app -p 8080 8090`
-        - `my_app -d`
-        - `my_app -l -d`
-        - `my_app -d -l`
-        - `my_app -p abcd`
+    - `my_app -p 8080 8090`
+    - `my_app -d`
+    - `my_app -l -d`
+    - `my_app -d -l`
+    - `my_app -p abcd`
 """
 
 
 class TestSingleValuedOptionParser:
+    def test_single_argument_with_single_integer_values(self):
+        parser = SingleValuedOptionParser(int)
+        assert 8080 == parser.parse(0, ["-p", "8080"])
+
+    def test_single_argument_with_single_string_values(self):
+        parser = SingleValuedOptionParser(str)
+        assert "/some/path" == parser.parse(0, ["-d", "/some/path"])
+
     def test_should_raise_exception_when_more_than_one_value_given(self):
         with pytest.raises(TooManyArgumentsException):
             parser = SingleValuedOptionParser(lambda x: x)
