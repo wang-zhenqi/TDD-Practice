@@ -13,6 +13,10 @@ def group_parsing_function(x, group):
     return group
 
 
+def digits_parsing_function(x, digits: List[int]):
+    return [int(digit) for digit in digits]
+
+
 class Options(BaseModel):
     logging: bool = False
     port: int = 0
@@ -21,11 +25,6 @@ class Options(BaseModel):
     digits: List[int] = []
 
 
-option_fields_map = {
-    "-l": "logging",
-    "-p": "port",
-    "-d": "directory",
-    "-g": "group",
 class OptionConfiguration:
     parsing_function = None
     max_number_of_arguments: int = None
@@ -61,9 +60,17 @@ class GroupOptions(OptionConfiguration):
     type_of_argument = List
 
 
+class DigitOptions(OptionConfiguration):
+    parsing_function = digits_parsing_function
+    max_number_of_arguments = MAX_INTEGER
+    min_number_of_arguments = 0
+    type_of_argument = List
+
+
 flag_configuration_map = {
     "-l": ("logging", LoggingOptions()),
     "-p": ("port", PortOptions()),
     "-d": ("directory", DirectoryOptions()),
     "-g": ("group", GroupOptions()),
+    "-D": ("digits", DigitOptions()),
 }
