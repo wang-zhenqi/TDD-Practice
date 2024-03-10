@@ -1,9 +1,8 @@
-from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 from OptionParser import OptionParser
+from SingleValuedOptionParser import validate_the_quantity_of_applicable_arguments
 
 
 class BooleanOptionParser(OptionParser):
     def parse(self, argument_list, index):
-        if len(argument_list) - index > 1 and not argument_list[index + 1].startswith("-"):
-            raise TooManyArgumentsException(argument_list[index])
-        return True
+        applicable_argument_list = validate_the_quantity_of_applicable_arguments(argument_list, index, 0, 0)
+        return applicable_argument_list == []
