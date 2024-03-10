@@ -1,7 +1,7 @@
 import pytest
 
-from cmd_arg_parser.src.my_app import process_arguments
 from Options.Options import Options
+from cmd_arg_parser.src.my_app import process_arguments
 
 """
 - Happy path:
@@ -39,13 +39,19 @@ def default_values():
 
 
 class TestOmittedArgument:
-    def test_no_argument_presented(self, default_values):
+    def test_should_return_default_values_when_no_argument_presented(self, default_values):
         assert default_values == process_arguments([])
 
 
 class TestMultipleSingleValuedArguments:
-    def test_multiple_single_valued_arguments(self, default_values):
+    def test_should_return_correct_values_when_multiple_single_valued_arguments_presented(self, default_values):
         default_values.logging = True
         default_values.port = 8080
         default_values.directory = "/some/path"
         assert default_values == process_arguments(["-d", "/some/path", "-l", "-p", "8080"])
+
+
+class TestMultipleValuedArguments:
+    def test_should_return_correct_value_when_multiple_valued_arguments_presented(self, default_values):
+        default_values.group = ["group1", "group2"]
+        assert default_values == process_arguments(["-g", "group1", "group2"])
