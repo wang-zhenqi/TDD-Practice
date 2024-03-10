@@ -67,7 +67,7 @@ def process_arguments(arguments_list: List[str]):
     options = Options()
     for index, arg in enumerate(iter(arguments_list)):
         if arg in option_fields_map:
-            option_parser = ParserFactory().get_parser_by_option_type(
+            option_parser = get_parser_by_option_type(
                 option_type=typing.get_type_hints(Options).get(option_fields_map[arg])
             )
 
