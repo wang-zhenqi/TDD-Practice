@@ -2,7 +2,7 @@ import pytest
 
 from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
-from OptionParser import get_parser_by_option_type
+from OptionParser import get_parser_by_option_flag
 
 """
 - Happy Path
@@ -23,17 +23,17 @@ from OptionParser import get_parser_by_option_type
 
 @pytest.fixture
 def boolean_option_parser():
-    return get_parser_by_option_type(bool)
+    return get_parser_by_option_flag("-l")
 
 
 @pytest.fixture
 def integer_option_parser():
-    return get_parser_by_option_type(int)
+    return get_parser_by_option_flag("-p")
 
 
 @pytest.fixture
 def string_option_parser():
-    return get_parser_by_option_type(str)
+    return get_parser_by_option_flag("-d")
 
 
 class TestBooleanOptionParser:
