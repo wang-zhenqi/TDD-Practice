@@ -1,3 +1,4 @@
+from Exceptions.ArgumentQuantityException import insufficient_arguments, too_many_arguments
 from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 
@@ -39,12 +40,16 @@ def validate_the_quantity_of_applicable_arguments(argument_list,
                                                   max_number_of_arguments,
                                                   min_number_of_arguments):
     applicable_arguments_list = get_applicable_argument_list(argument_list, index)
+
     if too_many_arguments(applicable_arguments_list, max_number_of_arguments):
         raise TooManyArgumentsException(argument_list[index])
+
     if insufficient_arguments(applicable_arguments_list, min_number_of_arguments):
         raise InsufficientArgumentException(argument_list[index])
+
     if max_number_of_arguments == 0 and min_number_of_arguments == 0:
         applicable_arguments_list.append("valid")
+
     return applicable_arguments_list
 
 
@@ -55,11 +60,3 @@ def get_applicable_argument_list(argument_list, index):
             break
         result.append(argument_list[i])
     return result
-
-
-def insufficient_arguments(argument_list, expected_number_of_arguments):
-    return len(argument_list) < expected_number_of_arguments
-
-
-def too_many_arguments(argument_list, expected_number_of_arguments):
-    return len(argument_list) > expected_number_of_arguments

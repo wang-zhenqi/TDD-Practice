@@ -1,6 +1,7 @@
 import pytest
 
-from cmd_arg_parser.src.my_app import process_arguments, Options
+from cmd_arg_parser.src.my_app import process_arguments
+from Options.Options import Options
 
 """
 - Happy path:
