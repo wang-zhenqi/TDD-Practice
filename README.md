@@ -88,3 +88,56 @@ def process_arguments(arguments_list: List[str]):
 ### 重新安排测试用例
 
 在开始多参数选项的开发前，由于我们新增了各种 Parser，因此可以将原本面向整个实现（my_app.process_arguments()）的测试转移到更为细化的不同 parser.parse() 中去。测试范围更小会使得代码更加可控，更容易定位问题。
+
+### 再次进行神奇的重构
+
+这里再次重构的原因是因为发现代码中仍然有一些不易察觉的坏味道：在 SingleValuedOptionParser 类中，两条检查参数数量的语句看起来很不直观：
+
+```python
+if len(argument_list) - index > 2 and not argument_list[index + 2].startswith("-"):
+    raise TooManyArgumentsException(argument_list[index])
+if (len(argument_list) - index > 1 and argument_list[index + 1].startswith("-")) or \
+        len(argument_list) - index == 1:
+    raise NotSufficientArgumentException(argument_list[index])
+```
+
+对读者来说，一下看到如此复杂的条件语句是很不容易搞清楚它的内在逻辑的。因此最简单的方式是“加注释”，解释一下这两个条条件语句的判断逻辑。然而随意添加注释本就是坏味道的一种，代码应该是表意的，而非需要注释才能让人读懂。（只有在逻辑无法用代码描述的情况下，例如应用了某种数学公式，无法用代码说明，才应使用说明性的注释。）
+
+因此，这里我们首先选择将条件语句抽取成函数：`too_many_arguments()` 和 `insufficient_arguments()`。这样代码的可读性就大大增强了。
+
+接下来我们仔细观察 `BooleanOptionParser` 和 `SingleValuedOptionParser` 就可以发现，它们的 `parse()` 方法的操作逻辑其实是一样的：都是先判断参数的数量，决定是否要抛出异常，然后再对参数进行处理。那么我们其实就可以引入一个通用的方法来检查参数，以简化代码逻辑：
+
+```python
+def validate_the_quantity_of_applicable_arguments(argument_list,
+                                                  index,
+                                                  max_number_of_arguments,
+                                                  min_number_of_arguments):
+    applicable_arguments_list = get_applicable_argument_list(argument_list, index)
+    if too_many_arguments(applicable_arguments_list, max_number_of_arguments):
+        raise TooManyArgumentsException(argument_list[index])
+    if insufficient_arguments(applicable_arguments_list, min_number_of_arguments):
+        raise InsufficientArgumentException(argument_list[index])
+    return applicable_arguments_list
+```
+
+再将它们的全部逻辑转移到基类 `OptionParser` 中去，这样这两个子类就可以废弃了：
+
+```python
+def parse(self, argument_list, index):
+    applicable_arguments_list = validate_the_quantity_of_applicable_arguments(
+        argument_list,
+        index,
+        self.max_number_of_arguments,
+        self.min_number_of_arguments)
+
+    try:
+        result = self.parsing_function(applicable_arguments_list[0])
+    except ValueError as e:
+        raise ValueError(f"The type of argument: {applicable_arguments_list[0]} is invalid.\nDetail: {str(e)}")
+    else:
+        return result
+```
+
+相应地修改测试用例中的代码，最终就得到了一个非常清晰且精简的代码。
+
+由此我们可以看到，关于解析 boolean，int，和 str 类型的参数，我们由最初的写在一起，到分别创建 Parser 类，再到最终又合并到了一起，背后完成了大量的重构，代码的逻辑在不断完善，这就是 TDD 的厉害之处，每次只专注于一个目标，小步快跑，不断优化。如果从最开始就想设计一个如现在版本一样的代码结构，那要多花很多时间。而且，在花费这些时间的过程中，我们的思维方式仍然是模拟——试错——改进的过程，本质上并没有比 TDD 更加高明。
