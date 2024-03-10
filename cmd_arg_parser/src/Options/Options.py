@@ -15,4 +15,5 @@ option_fields_map = {
     "-l": "logging",
     "-p": "port",
     "-d": "directory",
+    "-g": "group",
 }
