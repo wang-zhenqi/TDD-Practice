@@ -1,6 +1,6 @@
 import pytest
 
-from Exceptions.NotSufficientArgumentException import NotSufficientArgumentException
+from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 from Parsers.SingleValuedOptionParser import SingleValuedOptionParser
 
@@ -21,27 +21,27 @@ from Parsers.SingleValuedOptionParser import SingleValuedOptionParser
 class TestSingleValuedOptionParser:
     def test_single_argument_with_single_integer_values(self):
         parser = SingleValuedOptionParser(int)
-        assert 8080 == parser.parse(0, ["-p", "8080"])
+        assert 8080 == parser.parse(["-p", "8080"], 0)
 
     def test_single_argument_with_single_string_values(self):
         parser = SingleValuedOptionParser(str)
-        assert "/some/path" == parser.parse(0, ["-d", "/some/path"])
+        assert "/some/path" == parser.parse(["-d", "/some/path"], 0)
 
     def test_should_raise_exception_when_more_than_one_value_given(self):
         with pytest.raises(TooManyArgumentsException):
             parser = SingleValuedOptionParser(lambda x: x)
-            parser.parse(0, ["-p", "8080", "8090"])
+            parser.parse(["-p", "8080", "8090"], 0)
 
     @pytest.mark.parametrize("argument_list",
                              [["-d"], ["-l", "-p"], ["-d", "-l"]])
     def test_should_raise_exception_when_no_arguments_given(self, argument_list):
-        with pytest.raises(NotSufficientArgumentException):
+        with pytest.raises(InsufficientArgumentException):
             parser = SingleValuedOptionParser(lambda x: x)
-            parser.parse(0, argument_list)
+            parser.parse(argument_list, 0)
 
     @pytest.mark.parametrize("argument_list",
                              [["-p", "abcd"]])
     def test_should_raise_exception_when_argument_type_is_not_match(self, argument_list):
         with pytest.raises(ValueError):
             parser = SingleValuedOptionParser(int)
-            parser.parse(0, argument_list)
+            parser.parse(argument_list, 0)

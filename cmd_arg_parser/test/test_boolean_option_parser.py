@@ -21,7 +21,7 @@ def boolean_option_parser():
 
 class TestBooleanOptionParser:
     def test_single_argument_with_single_boolean_values(self, boolean_option_parser):
-        actual = boolean_option_parser.parse(0, ["-l"])
+        actual = boolean_option_parser.parse(["-l"], 0)
         assert actual
 
     @pytest.mark.parametrize(["index", "argument_list"], [
@@ -30,4 +30,4 @@ class TestBooleanOptionParser:
     ])
     def test_should_raise_exception_when_it_passes_any_argument(self, index, argument_list, boolean_option_parser):
         with pytest.raises(TooManyArgumentsException):
-            boolean_option_parser.parse(index, argument_list)
+            boolean_option_parser.parse(argument_list, index)

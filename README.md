@@ -71,7 +71,7 @@ def process_arguments(arguments_list: List[str]):
                 option_type=typing.get_type_hints(Options).get(option_fields_map[arg])
             )
 
-        setattr(options, option_fields_map[arg], option_parser.parse(index, arguments_list))
+        setattr(options, option_fields_map[arg], option_parser.parse(arguments_list, index))
     return options
 ```
 

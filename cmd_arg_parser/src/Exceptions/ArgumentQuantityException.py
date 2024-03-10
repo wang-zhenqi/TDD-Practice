@@ -1,3 +1,3 @@
-class OptionNumberException(Exception):
+class ArgumentQuantityException(Exception):
     def __init__(self, option_name):
         self.option_name = option_name
