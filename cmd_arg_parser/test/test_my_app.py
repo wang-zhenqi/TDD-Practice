@@ -1,6 +1,6 @@
 import pytest
 
-from Options.Options import Options
+from Options.Options import options_list
 from cmd_arg_parser.src.my_app import process_arguments
 
 """
@@ -35,7 +35,7 @@ from cmd_arg_parser.src.my_app import process_arguments
 
 @pytest.fixture
 def default_values():
-    return Options()
+    return options_list
 
 
 class TestOmittedArgument:
@@ -45,18 +45,18 @@ class TestOmittedArgument:
 
 class TestMultipleSingleValuedArguments:
     def test_should_return_correct_values_when_multiple_single_valued_arguments_presented(self, default_values):
-        default_values.logging = True
-        default_values.port = 8080
-        default_values.directory = "/some/path"
+        default_values[0].value = True
+        default_values[1].value = 8080
+        default_values[2].value = "/some/path"
         assert default_values == process_arguments(["-d", "/some/path", "-l", "-p", "8080"])
 
 
 class TestMultipleValuedArguments:
     @pytest.mark.parametrize(["field", "expected", "arguments"], [
-        ("group", ["group1", "group2"], ["-g", "group1", "group2"]),
-        ("digits", [1, 2, 3], ["-D", "1", "2", "3"])
+        (3, ["group1", "group2"], ["-g", "group1", "group2"]),
+        (4, [1, 2, 3], ["-D", "1", "2", "3"])
     ])
     def test_should_return_correct_value_when_multiple_valued_arguments_presented(self, default_values, field, expected,
                                                                                   arguments):
-        setattr(default_values, field, expected)
+        default_values[field].value = expected
         assert default_values == process_arguments(arguments)

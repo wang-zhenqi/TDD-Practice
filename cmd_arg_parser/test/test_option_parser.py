@@ -2,7 +2,8 @@ import pytest
 
 from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
-from OptionParser import get_parser_by_option_flag
+from OptionParser import get_parser_by_option
+from Options.Options import options_list
 
 """
 - Happy Path
@@ -23,17 +24,17 @@ from OptionParser import get_parser_by_option_flag
 
 @pytest.fixture
 def boolean_option_parser():
-    return get_parser_by_option_flag("-l")
+    return get_parser_by_option(options_list[0])
 
 
 @pytest.fixture
 def integer_option_parser():
-    return get_parser_by_option_flag("-p")
+    return get_parser_by_option(options_list[1])
 
 
 @pytest.fixture
 def string_option_parser():
-    return get_parser_by_option_flag("-d")
+    return get_parser_by_option(options_list[2])
 
 
 class TestBooleanOptionParser:
@@ -51,10 +52,10 @@ class TestBooleanOptionParser:
 
 
 class TestSingleValuedOptionParser:
-    def test_single_argument_with_single_integer_values(self, integer_option_parser):
+    def test_single_argument_with_single_integer_value(self, integer_option_parser):
         assert 8080 == integer_option_parser.parse(["-p", "8080"], 0)
 
-    def test_single_argument_with_single_string_values(self, string_option_parser):
+    def test_single_argument_with_single_string_value(self, string_option_parser):
         assert "/some/path" == string_option_parser.parse(["-d", "/some/path"], 0)
 
     def test_should_raise_exception_when_more_than_one_value_given(self, string_option_parser):
