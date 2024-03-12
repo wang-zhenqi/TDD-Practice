@@ -22,58 +22,59 @@ from Options.Options import available_options
 """
 
 
-@pytest.fixture
-def boolean_option_parser():
-    return OptionParser(available_options.logging)
-
-
-@pytest.fixture
-def integer_option_parser():
-    return OptionParser(available_options.port)
-
-
-@pytest.fixture
-def string_option_parser():
-    return OptionParser(available_options.directory)
-
-
 class TestBooleanOptionParser:
-    def test_single_argument_with_single_boolean_value(self, boolean_option_parser):
-        actual = boolean_option_parser.parse(["-l"], 0)
+    def test_single_argument_with_single_boolean_value(self):
+        parser = OptionParser(available_options.logging)
+        actual = parser.parse(["-l"], 0)
         assert actual
 
-    @pytest.mark.parametrize(["index", "argument_list"], [
-        [0, ["-l", "1"]],
-        [0, ["-l", "2", "x"]],
+    @pytest.mark.parametrize(["argument_list", "index"], [
+        [["-l", "1"], 0],
+        [["-l", "2", "x"], 0],
     ])
-    def test_should_raise_exception_when_it_passes_any_argument(self, index, argument_list, boolean_option_parser):
+    def test_should_raise_exception_when_it_passes_any_argument(self, argument_list, index):
+        parser = OptionParser(available_options.logging)
         with pytest.raises(TooManyArgumentsException):
-            boolean_option_parser.parse(argument_list, index)
+            parser.parse(argument_list, index)
 
 
 class TestSingleValuedOptionParser:
-    def test_single_argument_with_single_integer_value(self, integer_option_parser):
-        assert 8080 == integer_option_parser.parse(["-p", "8080"], 0)
+    def test_single_argument_with_single_integer_value(self):
+        parser = OptionParser(available_options.port)
+        assert 8080 == parser.parse(["-p", "8080"], 0)
 
-    def test_single_argument_with_single_string_value(self, string_option_parser):
-        assert "/some/path" == string_option_parser.parse(["-d", "/some/path"], 0)
+    def test_single_argument_with_single_string_value(self):
+        parser = OptionParser(available_options.directory)
+        assert "/some/path" == parser.parse(["-d", "/some/path"], 0)
 
-    def test_should_raise_exception_when_more_than_one_value_given(self, string_option_parser):
+    def test_should_raise_exception_when_more_than_one_value_given(self):
+        parser = OptionParser(available_options.port)
         with pytest.raises(TooManyArgumentsException):
-            string_option_parser.parse(["-p", "8080", "8090"], 0)
+            parser.parse(["-p", "8080", "8090"], 0)
 
-    @pytest.mark.parametrize("argument_list",
-                             [["-d"], ["-l", "-p"], ["-d", "-l"]])
-    def test_should_raise_exception_when_no_arguments_given(self, argument_list, string_option_parser):
+    @pytest.mark.parametrize(["argument_list", "index", "parser"],
+                             [
+                                 [["-d"], 0, OptionParser(available_options.directory)],
+                                 [["-l", "-p"], 1, OptionParser(available_options.port)],
+                                 [["-d", "-l"], 0, OptionParser(available_options.directory)],
+                             ])
+    def test_should_raise_exception_when_no_arguments_given(self, argument_list, index, parser):
         with pytest.raises(InsufficientArgumentException):
-            string_option_parser.parse(argument_list, 0)
+            parser.parse(argument_list, index)
 
     @pytest.mark.parametrize("argument_list",
                              [["-p", "abcd"]])
-    def test_should_raise_exception_when_argument_type_is_not_match(self, argument_list, integer_option_parser):
+    def test_should_raise_exception_when_argument_type_is_not_match(self, argument_list):
+        parser = OptionParser(available_options.port)
         with pytest.raises(ValueError):
-            integer_option_parser.parse(argument_list, 0)
+            parser.parse(argument_list, 0)
+
+
 class TestMultipleValuedOptionParser:
+    def test_multiple_arguments_with_multiple_string_values(self):
+        parser = OptionParser(available_options.group)
+        assert ["group1", "group2"] == parser.parse(["-p", "group1", "group2"], 0)
+
     @pytest.mark.parametrize(["argument_list", "expected_values"],
                              [
                                  [["-d", "1", "2"], [1, 2]],
