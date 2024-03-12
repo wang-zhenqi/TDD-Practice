@@ -1,3 +1,5 @@
+import re
+
 from OptionsBase import OptionDefinition
 
 
@@ -19,7 +21,7 @@ class OptionParser:
 def get_possible_argument_list(argument_list, index):
     result = []
     for i in range(index + 1, len(argument_list)):
-        if argument_list[i].startswith("-"):
+        if re.match(r"^-[a-zA-Z]", argument_list[i]):
             break
         result.append(argument_list[i])
     return result
