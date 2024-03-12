@@ -9,15 +9,11 @@ class OptionParser:
     def parse(self, argument_list, index):
         self.option.arguments = get_possible_argument_list(argument_list, index)
         try:
-            result = self.option.configs.parsing_function(self.option.arguments)
+            result = self.option.configs.parsing_function(self.option.arguments, self.option.configs.process_function)
         except ValueError as e:
             raise ValueError(f"The type of argument: {self.option.arguments} is invalid.\nDetail: {str(e)}")
         else:
             return result
-
-
-def get_parser_by_option(option: OptionDefinition):
-    return OptionParser(option)
 
 
 def get_possible_argument_list(argument_list, index):

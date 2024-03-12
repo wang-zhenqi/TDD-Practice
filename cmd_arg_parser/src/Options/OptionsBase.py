@@ -10,6 +10,7 @@ from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 
 class OptionConfiguration(BaseModel):
     parsing_function: Any = None
+    process_function: Any = None
     max_number_of_arguments: Annotated[int, Field(ge=0)] = 0
     min_number_of_arguments: Annotated[int, Field(ge=0)] = 0
 
@@ -19,13 +20,12 @@ class OptionDefinition(BaseModel):
     flag: str
     description: str = None
     value: Any = None
-    type: Type
     arguments: List[str] = []
     configs: OptionConfiguration
 
     @field_validator("arguments")
     def validate_the_quantity_of_arguments(cls, arguments: List[str]):
-        config = cls.model_fields.get("configs").get_default()
+        config = cls.model_fields.get("configs").get_default(call_default_factory=True)
 
         if too_many_arguments(arguments, config.max_number_of_arguments):
             raise TooManyArgumentsException(cls.model_fields.get("name"))

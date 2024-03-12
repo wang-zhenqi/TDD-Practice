@@ -2,8 +2,8 @@ import pytest
 
 from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
-from OptionParser import get_parser_by_option
-from Options.Options import options_list
+from OptionParser import OptionParser
+from Options.Options import available_options
 
 """
 - Happy Path
@@ -24,21 +24,21 @@ from Options.Options import options_list
 
 @pytest.fixture
 def boolean_option_parser():
-    return get_parser_by_option(options_list[0])
+    return OptionParser(available_options.logging)
 
 
 @pytest.fixture
 def integer_option_parser():
-    return get_parser_by_option(options_list[1])
+    return OptionParser(available_options.port)
 
 
 @pytest.fixture
 def string_option_parser():
-    return get_parser_by_option(options_list[2])
+    return OptionParser(available_options.directory)
 
 
 class TestBooleanOptionParser:
-    def test_single_argument_with_single_boolean_values(self, boolean_option_parser):
+    def test_single_argument_with_single_boolean_value(self, boolean_option_parser):
         actual = boolean_option_parser.parse(["-l"], 0)
         assert actual
 
