@@ -73,3 +73,12 @@ class TestSingleValuedOptionParser:
     def test_should_raise_exception_when_argument_type_is_not_match(self, argument_list, integer_option_parser):
         with pytest.raises(ValueError):
             integer_option_parser.parse(argument_list, 0)
+class TestMultipleValuedOptionParser:
+    @pytest.mark.parametrize(["argument_list", "expected_values"],
+                             [
+                                 [["-d", "1", "2"], [1, 2]],
+                                 [["-d", "-1", "-2", "3"], [-1, -2, 3]],
+                             ])
+    def test_multiple_arguments_with_multiple_integer_values(self, argument_list, expected_values):
+        parser = OptionParser(available_options.digits)
+        assert expected_values == parser.parse(argument_list, 0)
