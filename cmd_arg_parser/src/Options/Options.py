@@ -2,8 +2,7 @@ import inspect
 import sys
 from typing import List, Any
 
-import pydantic
-from pydantic import Field
+from pydantic import Field, create_model
 
 from OptionsBase import OptionConfiguration, OptionDefinition
 
@@ -98,7 +97,7 @@ def generate_available_options():
 
     attributes = {instance.name: (instance.__class__, instance) for instance in instance_list}
 
-    return pydantic.create_model("AvailableOptions", **attributes, )()
+    return create_model("AvailableOptions", **attributes, )()
 
 
 available_options = generate_available_options()
