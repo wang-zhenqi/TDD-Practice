@@ -1,4 +1,4 @@
-from typing import Type, Any, List
+from typing import Any, List
 
 from pydantic import BaseModel, Field, field_validator
 from typing_extensions import Annotated

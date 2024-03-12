@@ -1,8 +1,8 @@
 import sys
 from typing import List
 
-from Parsers.OptionParser import OptionParser
 from Options.Options import available_options
+from Parsers.OptionParser import OptionParser
 
 
 def process_arguments(arguments_list: List[str]):
