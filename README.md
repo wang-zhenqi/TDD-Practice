@@ -141,3 +141,70 @@ def parse(self, argument_list, index):
 相应地修改测试用例中的代码，最终就得到了一个非常清晰且精简的代码。
 
 由此我们可以看到，关于解析 boolean，int，和 str 类型的参数，我们由最初的写在一起，到分别创建 Parser 类，再到最终又合并到了一起，背后完成了大量的重构，代码的逻辑在不断完善，这就是 TDD 的厉害之处，每次只专注于一个目标，小步快跑，不断优化。如果从最开始就想设计一个如现在版本一样的代码结构，那要多花很多时间。而且，在花费这些时间的过程中，我们的思维方式仍然是模拟——试错——改进的过程，本质上并没有比 TDD 更加高明。
+
+### 实现多参数选项的功能
+
+多参数选项的功能在现在的代码结构下就比较容易添加了。我们只需要定义针对不同选项的 `parsing_function` 就可以实现对于列表参数的处理。
+
+这里我们更新了 `option_fields_map` 以及 `option_type_parser_map`，添加了对于新选项的定义。
+
+```python
+option_type_parser_map = {
+    bool: OptionParser(bool, 0, 0, bool),
+    int: OptionParser(int, 1, 1, int),
+    str: OptionParser(str, 1, 1, str),
+    List: OptionParser(lambda x: x, MAX_INTEGER, 0, List),
+}
+```
+
+但是这里就发现了一个问题：在现在的代码中，`parsing_function` 需要一个参数，这个参数来自于列表 `argument_list`。对于无参数选项，我们直接忽略它；对于单参数选项，我们取它的第一个元素；但是对于多参数选项，我们却需要整个列表——参数类型的不同就会导致处理方式的复杂。因此，我们又多引入了一个参数：选项参数的类型，以及一个条件判断：如果要解析的选项的参数类型是列表，那么将这个列表再包装成一个单一列表元素的列表（`[argument_list]`）。代码如下：
+
+```python
+class OptionParser:
+    def parse(self, argument_list, index):
+        applicable_arguments_list = validate_the_quantity_of_applicable_arguments(argument_list, ..., self.expected_type)
+
+        result = self.parsing_function(applicable_arguments_list[0])
+        ...
+
+def validate_the_quantity_of_applicable_arguments(..., expected_type):
+    ...
+
+    if max_number_of_arguments == 0 and min_number_of_arguments == 0:
+        applicable_arguments_list.append("valid")
+
+    if expected_type == List:
+        return [applicable_arguments_list]
+
+    return applicable_arguments_list
+```
+
+于是，在完成这个功能后，作者就可以发现，这里还有一些需要重构的点。
+
+### 再次重构
+
+这次重构的重点就是重新封装各个选项：可以注意到，每个选项都有它自己的名称、标识、类型、默认值、接受的参数数量等等属性，由此就可以抽象出一个选项定义的类来。
+
+```python
+class OptionConfiguration(BaseModel):
+    parsing_function: Any = None
+    process_function: Any = None
+    max_number_of_arguments: Annotated[int, Field(ge=0)] = 0
+    min_number_of_arguments: Annotated[int, Field(ge=0)] = 0
+
+class OptionDefinition(BaseModel):
+    name: str
+    flag: str
+    description: str = None
+    value: Any = None
+    arguments: List[str] = []
+    configs: OptionConfiguration
+```
+
+这样一来，在调用 `OptionParser.parsing_function()` 之前就不需要做那么多判断，参数数量的检查也利用了 `Pydantic` 库自带的 validate 机制来完成，将检查方法放进 `pydantic.BaseModel` 的配置中，在给它赋值的时候，就会自动去调用 validate 函数。
+
+对于解析参数列表的方法，也可以直接定义在选项的属性里，不论处理哪个选项，我们都可以用统一的方式来调用。
+
+### 结尾
+
+最终经过不断地重构，得到一个比较容易维护、扩展、和健壮的命令行选项解析程序。对于开发者来讲，如果需要添加新的选项，只需要更新 `Options.py` 文件，添加该选项的定义即可。
