@@ -1,6 +1,6 @@
 import re
 
-from OptionsBase import OptionDefinition
+from Options.OptionsBase import OptionDefinition
 
 
 class OptionParser:
