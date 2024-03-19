@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="practice.tdd.args.OptionParsersTest$BooleanOptionsParserTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-03-19T03:55:38" hostname="Zhenqis-Backup-Macbook-Pro.local" time="0.006">
+  <properties/>
+  <testcase name="should_not_accept_extra_arguments_for_boolean_option()" classname="practice.tdd.args.OptionParsersTest$BooleanOptionsParserTest" time="0.001"/>
+  <testcase name="should_set_boolean_option_to_true_if_flag_presents()" classname="practice.tdd.args.OptionParsersTest$BooleanOptionsParserTest" time="0.001"/>
+  <testcase name="should_set_default_value_to_false_if_option_not_present()" classname="practice.tdd.args.OptionParsersTest$BooleanOptionsParserTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

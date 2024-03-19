@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="practice.tdd.args.OptionParsersTest$ListOptionParserTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-03-19T03:55:38" hostname="Zhenqis-Backup-Macbook-Pro.local" time="0.014">
+  <properties/>
+  <testcase name="should_parse_list_of_values()" classname="practice.tdd.args.OptionParsersTest$ListOptionParserTest" time="0.002"/>
+  <testcase name="should_use_empty_array_as_default_value()" classname="practice.tdd.args.OptionParsersTest$ListOptionParserTest" time="0.001"/>
+  <testcase name="should_not_treat_negative_int_as_flag()" classname="practice.tdd.args.OptionParsersTest$ListOptionParserTest" time="0.002"/>
+  <testcase name="should_throw_exception_if_value_parser_cant_parse_value()" classname="practice.tdd.args.OptionParsersTest$ListOptionParserTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

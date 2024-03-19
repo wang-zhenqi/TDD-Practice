@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="practice.tdd.args.ArgsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-03-19T03:55:38" hostname="Zhenqis-Backup-Macbook-Pro.local" time="0.043">
+  <properties/>
+  <testcase name="should_raise_exception_if_type_not_supported()" classname="practice.tdd.args.ArgsTest" time="0.025"/>
+  <testcase name="should_example_1()" classname="practice.tdd.args.ArgsTest" time="0.008"/>
+  <testcase name="should_example_2()" classname="practice.tdd.args.ArgsTest" time="0.005"/>
+  <testcase name="should_throw_illegal_option_exception_if_annotation_not_present()" classname="practice.tdd.args.ArgsTest" time="0.002"/>
+  <system-out><![CDATA[logging
+class java.lang.Object
+logging
+boolean
+port
+int
+directory
+class java.lang.String
+group
+class [Ljava.lang.String;
+decimals
+class [Ljava.lang.Integer;
+logging
+boolean
+port
+int
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

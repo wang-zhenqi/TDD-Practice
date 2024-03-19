@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2024-03-19T03:55:38" hostname="Zhenqis-Backup-Macbook-Pro.local" time="0.064">
+  <properties/>
+  <testcase name="should_not_accept_extra_argument_for_single_valued_option()" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.001"/>
+  <testcase name="should_parse_int_as_option_value()" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.001"/>
+  <testcase name="should_set_default_value_if_option_not_present()" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.001"/>
+  <testcase name="should_not_accept_extra_argument_for_string_single_valued_option()" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.001"/>
+  <testcase name="[1] -p -l" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.02"/>
+  <testcase name="[2] -p" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.0"/>
+  <testcase name="[1] -d -l" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.001"/>
+  <testcase name="[2] -d" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.001"/>
+  <testcase name="should_parse_string_as_option_value()" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.002"/>
+  <testcase name="should_parse_value_if_flag_presents()" classname="practice.tdd.args.OptionParsersTest$UnaryOptionParserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
