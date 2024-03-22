@@ -4,13 +4,16 @@ version = "0.1.0"
 description = "In this repository, there are source about how to implement TDD strategy. I'll keep track of the code evolution to demonstrate how TDD is applied."
 authors = ["Zhenqi Wang"]
 readme = "README.md"
-packages = [{include = "tdd_practice"}]
+repository = "https://github.com/wang-zhenqi/TDD-Practice"
+packages = [{ include = "tdd_practice" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pytest = "^8.1.1"
-pydantic = "^2.5.2"
+pydantic = "^2"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^8"
+pytest-mock = "^3"
 
 [build-system]
 requires = ["poetry-core"]
