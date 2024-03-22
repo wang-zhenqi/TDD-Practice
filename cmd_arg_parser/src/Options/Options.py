@@ -4,7 +4,7 @@ from typing import List, Any
 
 from pydantic import Field, create_model
 
-from OptionsBase import OptionConfiguration, OptionDefinition
+from Options.OptionsBase import OptionConfiguration, OptionDefinition
 
 UPPER_BOUND_OF_LIST_SIZE = 65535
 
