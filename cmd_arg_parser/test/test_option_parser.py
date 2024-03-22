@@ -5,7 +5,6 @@ import pytest
 from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 from Options.Options import available_options
-from Options.OptionsBase import OptionDefinition
 from Parsers.OptionParser import OptionParser
 
 """
