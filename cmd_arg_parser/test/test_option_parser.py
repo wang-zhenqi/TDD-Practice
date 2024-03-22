@@ -1,9 +1,12 @@
+from unittest.mock import patch, MagicMock
+
 import pytest
 
 from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
-from Parsers.OptionParser import OptionParser
 from Options.Options import available_options
+from Options.OptionsBase import OptionDefinition
+from Parsers.OptionParser import OptionParser
 
 """
 - Happy Path
@@ -39,6 +42,13 @@ class TestBooleanOptionParser:
 
 
 class TestSingleValuedOptionParser:
+    @patch("Options.OptionsBase.OptionDefinition")
+    def test_should_parse_value_if_a_single_valued_option_present(self, whatever_option):
+        whatever_option.configs.parsing_function = MagicMock()
+        whatever_option.configs.process_function = None
+        OptionParser(whatever_option).parse(["-x", "anything"], 0)
+        whatever_option.configs.parsing_function.assert_called_once_with(["anything"], None)
+
     def test_single_argument_with_single_integer_value(self):
         parser = OptionParser(available_options.port)
         assert 8080 == parser.parse(["-p", "8080"], 0)

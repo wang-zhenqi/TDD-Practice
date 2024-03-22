@@ -9,7 +9,7 @@ from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 
 
 class OptionConfiguration(BaseModel):
-    parsing_function: Any = None
+    parsing_function: Any
     process_function: Any = None
     max_number_of_arguments: Annotated[int, Field(ge=0)] = 0
     min_number_of_arguments: Annotated[int, Field(ge=0)] = 0
