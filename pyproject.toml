@@ -6,6 +6,7 @@ authors = ["Zhenqi Wang"]
 readme = "README.md"
 repository = "https://github.com/wang-zhenqi/TDD-Practice"
 packages = [{ include = "tdd_practice" }]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
