@@ -9,7 +9,7 @@ from Options.OptionsBase import OptionConfiguration, OptionDefinition
 UPPER_BOUND_OF_LIST_SIZE = 65535
 
 
-def boolean_parsing_function(*args):
+def boolean_parsing_function(*_):
     return True
 
 
