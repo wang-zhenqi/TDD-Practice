@@ -1,0 +1,10 @@
+Fizz:
+  - action: is_divisible
+    condition: 3
+  - action: is_digit_present
+    condition: "3"
+Buzz:
+  - action: is_divisible
+    condition: 5
+  - action: is_digit_present
+    condition: "5"
