@@ -5,7 +5,7 @@ class TestDatabaseRepository:
     def test_should_retrieve_employees_whose_birthday_is_today(self):
         db = DatabaseRepository(
             "localhost",
-            "3306",
+            3306,
             "root",
             "B9Lz_XFEKh",
             "BirthdayGreetings",

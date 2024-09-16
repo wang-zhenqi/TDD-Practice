@@ -6,7 +6,7 @@ from employee import Employee
 
 
 class DatabaseRepository:
-    def __init__(self, host: str, port: str, user: str, password: str, database: str, table_name: str):
+    def __init__(self, host: str, port: int, user: str, password: str, database: str, table_name: str):
         self.host = host
         self.port = port
         self.user = user
