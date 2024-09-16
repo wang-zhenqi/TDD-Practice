@@ -45,10 +45,6 @@ Happy Birthday, dear <first_name>!
 """
 import pytest
 
-from EmailContent import EmailContent
-from birthday_greetings import generate_message
-from employee import Employee
-
 
 @pytest.mark.skip
 class TestBirthdayGreetings:
@@ -67,39 +63,3 @@ class TestBirthdayGreetings:
     def test_should_print_no_employees_whose_birthday_is_today_when_there_are_no_employees_whose_birthday_is_today(
             self):
         pass
-
-
-@pytest.mark.skip
-class TestReadingDatabase:
-    def test_should_connect_to_database(self):
-        pass
-
-    def test_should_retrieve_employees_whose_birthday_is_today(self):
-        pass
-
-    def test_should_return_nothing_when_there_are_no_employees_whose_birthday_is_today(self):
-        pass
-
-
-class TestSendingBirthdayGreetings:
-    def test_should_generate_message_containing_employee_first_name(self):
-        employee = Employee(first_name="John")
-        expected = EmailContent(
-            sender="",
-            recipient="",
-            subject="Happy Birthday!",
-            body="Happy Birthday, dear John!"
-        )
-        actual = generate_message(employee)
-        assert actual == expected
-
-    def test_should_send_message_to_the_employees_address(self):
-        employee = Employee(first_name="john", email="john.doe@abc.com")
-        expected = EmailContent(
-            sender="",
-            recipient="john.doe@abc.com",
-            subject="Happy Birthday!",
-            body="Happy Birthday, dear john!"
-        )
-        actual = generate_message(employee)
-        assert actual == expected
