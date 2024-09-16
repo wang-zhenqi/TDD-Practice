@@ -9,8 +9,8 @@ A sample of the database is as below:
 
 id | last_name | first_name | date_of_birth | email
 ---|-----------|------------|---------------|------
-1  | Doe       | John       | 1982-10-08    | john.doe@gmail.com
-2  | Ann       | Mary       | 1975-09-11    | mary.ann@gmail.com
+1  | Doe       | John       | 1990-01-01    | john.doe@gmail.com
+2  | Ann       | Mary       | 1994-11-22    | mary.ann@gmail.com
 
 The program should read the database and email all employees whose birthday is today. The email should contain the following message:
 
