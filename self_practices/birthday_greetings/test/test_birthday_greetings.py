@@ -31,6 +31,8 @@ Happy Birthday, dear <first_name>!
 
 ## Tasks
 
+### Requirement 1
+
 - [x] Write a program that reads the database and sends birthday greetings to all employees whose birthday is today.
     - [x] Connecting to the mysql database
         - [x] The program should connect to the mysql database on localhost:3306
@@ -40,6 +42,10 @@ Happy Birthday, dear <first_name>!
         - [x] The program should generate emails to all employees whose birthday is today when such employees exist
             - [x] The email body should contain the message described above
             - [x] The recipient of the email should be the employee's email address
+
+### Requirement 2
+
+- [ ] Make it possible to get data from file
 """
 from datetime import datetime
 
