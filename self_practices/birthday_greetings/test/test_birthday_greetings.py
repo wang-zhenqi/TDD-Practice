@@ -57,38 +57,34 @@ email to all employees
 """
 from datetime import datetime
 
-import pytest
 from birthday_greetings import generate_message
-from database_repository import DatabaseRepository
-
-
-@pytest.fixture(scope="module")
-def db_cnx():
-    return DatabaseRepository(
-        host="localhost",
-        port=3306,
-        user="root",
-        password="B9Lz_XFEKh",
-        database="BirthdayGreetings",
-        table_name="Employees",
-    )
-
-
-@pytest.fixture(scope="module")
-def today():
-    return datetime.today().strftime("%Y-%m-%d")
 
 
 class TestBirthdayGreetings:
-    def test_should_send_email_when_there_are_employees_whose_birthday_is_today(self, db_cnx, today):
-        employees = db_cnx.get_employees_whose_birthday_is(today)
+    def test_should_send_email_when_there_are_employees_whose_birthday_is_today(self, mocker, db, today):
+        mock_cursor = mocker.Mock()
+        mock_cursor.fetchall.return_value = [
+            (1, "Peter", "Smith", "peter.smith@gmail.com", datetime(1990, 9, 19)),
+        ]
+        mock_db_connection = mocker.Mock()
+        mock_db_connection.cursor.return_value = mock_cursor
+        mocker.patch.object(db, "db_cnx", mock_db_connection)
+
+        employees = db.get_employees_whose_birthday_is(today)
+        assert len(employees) == 1
+
         email_contents = [generate_message(employee) for employee in employees]
         assert len(email_contents) == 1
-        assert len(employees) == 1
         assert employees[0].first_name == "Peter"
         assert email_contents[0].recipient == "peter.smith@gmail.com"
         assert email_contents[0].body == "Happy Birthday, dear Peter!"
 
-    def test_should_not_send_email_when_there_are_no_employees_whose_birthday_is_today(self, db_cnx):
-        employees = db_cnx.get_employees_whose_birthday_is("2024-09-11")
+    def test_should_not_send_email_when_there_are_no_employees_whose_birthday_is_today(self, mocker, db):
+        mock_cursor = mocker.Mock()
+        mock_cursor.fetchall.return_value = []
+        mock_db_connection = mocker.Mock()
+        mock_db_connection.cursor.return_value = mock_cursor
+        mocker.patch.object(db, "db_cnx", mock_db_connection)
+
+        employees = db.get_employees_whose_birthday_is("2024-09-11")
         assert len(employees) == 0

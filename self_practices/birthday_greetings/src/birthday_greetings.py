@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from database_repository import DatabaseRepository
+from database_repository import RelationalDataBaseManager
 from EmailContent import EmailContent
 from employee import Employee
+from utils import read_yaml_file
 
 
 def generate_message(employee: Employee) -> EmailContent:
@@ -15,15 +16,12 @@ def generate_message(employee: Employee) -> EmailContent:
 
 
 if __name__ == "__main__":
-    db_cnx = DatabaseRepository(
-        host="localhost",
-        port=3306,
-        user="root",
-        password="B9Lz_XFEKh",
-        database="BirthdayGreetings",
-        table_name="Employees",
-    )
+    db_configs = read_yaml_file("../database_connection.yaml")
+    db_cnx = RelationalDataBaseManager(**db_configs)
+    db_cnx.connect()
+
     today = datetime.today().strftime("%Y-%m-%d")
+
     employees = db_cnx.get_employees_whose_birthday_is(today)
     for employee in employees:
         message = generate_message(employee)

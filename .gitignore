@@ -4,3 +4,4 @@ test/.pytest_cache
 .DS_Store
 .tool-versions
 .cache_ggshield
+self_practices/birthday_greetings/database_connection.yaml

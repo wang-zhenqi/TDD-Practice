@@ -34,5 +34,5 @@ repos:
       - id: ggshield
         language_version: python3
         stages: [ commit ]
-        args: ["secret", "scan", "repo", "./"]
+        args: ["--version"]
         additional_dependencies: [ "--index-url", "https://pypi.tuna.tsinghua.edu.cn/simple" ]

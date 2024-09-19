@@ -1,26 +1,18 @@
 from typing import List
 
 from employee import Employee
-from mysql.connector import connection
+from mysql.connector import MySQLConnection, connection
+from pydantic import BaseModel
 
 
-class DatabaseRepository:
-    def __init__(
-        self,
-        host: str,
-        port: int,
-        user: str,
-        password: str,
-        database: str,
-        table_name: str,
-    ):
-        self.host = host
-        self.port = port
-        self.user = user
-        self.password = password
-        self.database = database
-        self.table_name = table_name
-        self.db_cnx = self.connect()
+class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
+    host: str
+    port: int
+    user: str
+    password: str
+    database: str
+    table_name: str
+    db_cnx: MySQLConnection = None
 
     def get_employees_whose_birthday_is(self, date: str) -> List[Employee]:
         query = f"""
@@ -28,7 +20,7 @@ SELECT *
 FROM {self.table_name}
 WHERE MONTH(birthday) = MONTH('{date}') AND DAY(birthday) = DAY('{date}');
 """
-        cursor = self.db_cnx.cursor() if self.db_cnx else self.connect().cursor()
+        cursor = self.db_cnx.cursor()
         cursor.execute(query)
 
         return [
@@ -42,7 +34,7 @@ WHERE MONTH(birthday) = MONTH('{date}') AND DAY(birthday) = DAY('{date}');
         ]
 
     def connect(self):
-        return connection.MySQLConnection(
+        self.db_cnx = connection.MySQLConnection(
             host=self.host,
             port=self.port,
             user=self.user,
