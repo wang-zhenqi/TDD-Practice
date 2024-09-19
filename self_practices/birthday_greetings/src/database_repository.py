@@ -1,12 +1,10 @@
-from typing import List, Dict
-
-from pydantic import BaseModel
-from sqlalchemy import create_engine, Connection
-from sqlalchemy import func
-from sqlalchemy.orm import sessionmaker, Session
+from typing import Dict, List
 
 from employee import Employee as employee_schema
 from models.employee import Employee as employee_model
+from pydantic import BaseModel
+from sqlalchemy import create_engine, func
+from sqlalchemy.orm import Session, sessionmaker
 
 
 class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
@@ -23,10 +21,14 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
 
     def get_employees_whose_birthday_is(self, date: str) -> List[employee_schema]:
 
-        result = self.session.query(self.models["employee"]).filter(
-            (func.month(self.models["employee"].birthday) == date[5:7]) &
-            (func.day(self.models["employee"].birthday) == date[8:10])
-        ).all()
+        result = (
+            self.session.query(self.models["employee"])
+            .filter(
+                (func.month(self.models["employee"].birthday) == date[5:7])
+                & (func.day(self.models["employee"].birthday) == date[8:10])
+            )
+            .all()
+        )
 
         self.session.close()
 
@@ -43,8 +45,9 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
 
     def make_connection_string(self) -> str:
         driver = f"+{self.database_driver}" if self.database_driver else ""
-        return \
+        return (
             f"{self.database_type}{driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.database_name}"
+        )
 
     def make_session(self):
         self.session = sessionmaker(bind=(create_engine(self.make_connection_string())))()
