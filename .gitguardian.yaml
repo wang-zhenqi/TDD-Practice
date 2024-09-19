@@ -1,0 +1,5 @@
+secret:
+  ignored-matches:
+  - match: f5375aa2eaaa1a79641e4b835492643f5b6ea96fc291346debc5668d02ed3ebb
+    name: Generic Password - commit://199fb77ff15f300bfa9e5ea3146f4fa1cffc3f89/self_practices/birthday_greetings/src/birthday_greetings.py
+version: 2
