@@ -23,11 +23,15 @@ class TestObjectRelationalMapping:
     def test_should_connect_to_the_database(self):
         pass
 
-    def test_should_retrieve_the_data_of_employees_whose_birthday_is_today(self):
+    def test_should_retrieve_the_data_of_employees_whose_birthday_is_today(
+        self,
+    ):
         pass
 
     def test_should_read_data_from_a_file(self):
         pass
 
-    def test_should_return_the_data_of_employees_whose_birthday_is_today_to_employee_objects(self):
+    def test_should_return_the_data_of_employees_whose_birthday_is_today_to_employee_objects(
+        self,
+    ):
         pass

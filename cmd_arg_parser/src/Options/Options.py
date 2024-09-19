@@ -97,7 +97,10 @@ def generate_available_options():
 
     attributes = {instance.name: (instance.__class__, instance) for instance in instance_list}
 
-    return create_model("AvailableOptions", **attributes, )()
+    return create_model(
+        "AvailableOptions",
+        **attributes,
+    )()
 
 
 available_options = generate_available_options()

@@ -1,0 +1,24 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+        additional_dependencies: ["--index-url", "https://pypi.tuna.tsinghua.edu.cn/simple"]
+    -   id: end-of-file-fixer
+        additional_dependencies: ["--index-url", "https://pypi.tuna.tsinghua.edu.cn/simple"]
+    -   id: trailing-whitespace
+        additional_dependencies: ["--index-url", "https://pypi.tuna.tsinghua.edu.cn/simple"]
+-   repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+    -   id: black
+        args:
+          - --line-length=120
+        additional_dependencies: ["--index-url", "https://pypi.tuna.tsinghua.edu.cn/simple"]
+-   repo: https://github.com/gitguardian/ggshield
+    rev: v1.31.0
+    hooks:
+      - id: ggshield
+        language_version: python3
+        stages: [commit]
+        additional_dependencies: ["--index-url", "https://pypi.tuna.tsinghua.edu.cn/simple"]

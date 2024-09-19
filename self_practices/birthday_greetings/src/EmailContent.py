@@ -6,4 +6,9 @@ class EmailContent:
         self.body = body
 
     def __eq__(self, other):
-        return self.sender == other.sender and self.recipient == other.recipient and self.subject == other.subject and self.body == other.body
+        return (
+            self.sender == other.sender
+            and self.recipient == other.recipient
+            and self.subject == other.subject
+            and self.body == other.body
+        )

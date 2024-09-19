@@ -15,9 +15,19 @@ pyyaml = "^6.0.2"
 sqlalchemy = "^2.0.34"
 mysql-connector-python = "^9.0.0"
 
+[tool.poetry.group.pre-commit.dependencies]
+pre-commit = "^3.8.0"
+black = "^24.8.0"
+
 [tool.poetry.group.test.dependencies]
 pytest = "^8.1.1"
 pytest-mock = "^3"
+
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "primary"
 
 [build-system]
 requires = ["poetry-core"]

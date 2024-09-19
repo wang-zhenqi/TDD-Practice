@@ -7,7 +7,3 @@ class Employee:
         self.last_name = last_name
         self.email = email
         self.date_of_birth = datetime.strptime(birth_date, "%Y-%m-%d")
-
-    def is_birthday(self, date: str):
-        date = datetime.strptime(date, "%Y-%m-%d")
-        return self.date_of_birth.month == date.month and self.date_of_birth.day == date.day

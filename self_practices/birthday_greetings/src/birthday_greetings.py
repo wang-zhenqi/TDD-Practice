@@ -10,18 +10,18 @@ def generate_message(employee: Employee) -> EmailContent:
         sender="",
         recipient=employee.email,
         subject="Happy Birthday!",
-        body="Happy Birthday, dear {}!".format(employee.first_name)
+        body="Happy Birthday, dear {}!".format(employee.first_name),
     )
 
 
 if __name__ == "__main__":
     db_cnx = DatabaseRepository(
-        "localhost",
-        3306,
-        "root",
-        "B9Lz_XFEKh",
-        "BirthdayGreetings",
-        "Employees"
+        host="localhost",
+        port=3306,
+        user="root",
+        password="B9Lz_XFEKh",
+        database="BirthdayGreetings",
+        table_name="Employees",
     )
     today = datetime.today().strftime("%Y-%m-%d")
     employees = db_cnx.get_employees_whose_birthday_is(today)

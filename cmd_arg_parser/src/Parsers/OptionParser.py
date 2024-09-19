@@ -4,7 +4,6 @@ from Options.OptionsBase import OptionDefinition
 
 
 class OptionParser:
-
     def __init__(self, option: OptionDefinition):
         self.option = option
 

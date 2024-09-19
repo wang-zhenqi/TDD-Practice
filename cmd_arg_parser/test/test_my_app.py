@@ -52,14 +52,15 @@ class TestMultipleSingleValuedArguments:
 
 
 class TestMultipleValuedArguments:
-    @pytest.mark.parametrize(["field", "expected", "arguments"], [
-        ("group", ["group1", "group2"], ["-g", "group1", "group2"]),
-        ("digits", [1, 2, 3], ["-D", "1", "2", "3"])
-    ])
-    def test_should_return_correct_values_when_multiple_valued_arguments_presented(self,
-                                                                                   default_values,
-                                                                                   field,
-                                                                                   expected,
-                                                                                   arguments):
+    @pytest.mark.parametrize(
+        ["field", "expected", "arguments"],
+        [
+            ("group", ["group1", "group2"], ["-g", "group1", "group2"]),
+            ("digits", [1, 2, 3], ["-D", "1", "2", "3"]),
+        ],
+    )
+    def test_should_return_correct_values_when_multiple_valued_arguments_presented(
+        self, default_values, field, expected, arguments
+    ):
         default_values[field] = expected
         assert default_values == process_arguments(arguments)

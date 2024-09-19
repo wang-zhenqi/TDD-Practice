@@ -7,7 +7,12 @@ from employee import Employee
 
 @pytest.fixture(scope="module")
 def john_doe():
-    return Employee(first_name="John", last_name="Doe", email="john.doe@gmail.com", birth_date="1990-01-01")
+    return Employee(
+        first_name="John",
+        last_name="Doe",
+        email="john.doe@gmail.com",
+        birth_date="1990-01-01",
+    )
 
 
 class TestSendingBirthdayGreetings:
@@ -16,7 +21,7 @@ class TestSendingBirthdayGreetings:
             sender="",
             recipient="john.doe@gmail.com",
             subject="Happy Birthday!",
-            body="Happy Birthday, dear John!"
+            body="Happy Birthday, dear John!",
         )
         actual = generate_message(john_doe)
         assert actual == expected

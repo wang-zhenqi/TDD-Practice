@@ -58,12 +58,12 @@ from database_repository import DatabaseRepository
 @pytest.fixture(scope="module")
 def db_cnx():
     return DatabaseRepository(
-        "localhost",
-        3306,
-        "root",
-        "B9Lz_XFEKh",
-        "BirthdayGreetings",
-        "Employees"
+        host="localhost",
+        port=3306,
+        user="root",
+        password="B9Lz_XFEKh",
+        database="BirthdayGreetings",
+        table_name="Employees",
     )
 
 
