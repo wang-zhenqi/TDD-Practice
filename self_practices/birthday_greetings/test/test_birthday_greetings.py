@@ -3,17 +3,17 @@
 
 ## Problem Description
 
-There's a database of employees and their birthdays. Write a program that sends a birthday greeting to all employees \
+There's a database_name of employees and their birthdays. Write a program that sends a birthday greeting to all employees \
 whose birthday is today.
 
-A sample of the database is as below:
+A sample of the database_name is as below:
 
 id | last_name | first_name | date_of_birth | email
 ---|-----------|------------|---------------|------
 1  | Doe       | John       | 1990-01-01    | john.doe@gmail.com
 2  | Ann       | Mary       | 1994-11-22    | mary.ann@gmail.com
 
-The program should read the database and email all employees whose birthday is today. The email should contain the \
+The program should read the database_name and email all employees whose birthday is today. The email should contain the \
 following message:
 
 ```
@@ -26,9 +26,9 @@ Happy Birthday, dear <first_name>!
 
 - **Given** "Today's Date", **When** there are employees whose birthday is today, **Then** send a birthday greeting \
 email to all employees
-    - **Given** a database, **When** the program reads the database, **Then** the program should retrieve the \
+    - **Given** a database_name, **When** the program reads the database_name, **Then** the program should retrieve the \
     employees whose birthday is today
-        - **Given** a database, **When** it returns no employees whose birthday is today, **Then** the program should \
+        - **Given** a database_name, **When** it returns no employees whose birthday is today, **Then** the program should \
         not send any email, print "No employees whose birthday is today"
     - **Given** an employee's record, **When** the program sends a birthday greeting email, **Then** the email should \
     contain the message described above.
@@ -41,9 +41,9 @@ email to all employees
 
 ### Requirement 1
 
-- [x] Write a program that reads the database and sends birthday greetings to all employees whose birthday is today.
-    - [x] Connecting to the mysql database
-        - [x] The program should connect to the mysql database on localhost:3306
+- [x] Write a program that reads the database_name and sends birthday greetings to all employees whose birthday is today.
+    - [x] Connecting to the mysql database_name
+        - [x] The program should connect to the mysql database_name on localhost:3306
         - [x] The program should retrieve the employees whose birthday is today
         - [x] The program should return nothing when there are no employees whose birthday is today
     - [x] Generating birthday greetings

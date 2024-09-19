@@ -1,8 +1,12 @@
-from typing import List
+from typing import List, Dict
 
-from employee import Employee
-from mysql.connector import MySQLConnection, connection
 from pydantic import BaseModel
+from sqlalchemy import create_engine, Connection
+from sqlalchemy import func
+from sqlalchemy.orm import sessionmaker, Session
+
+from employee import Employee as employee_schema
+from models.employee import Employee as employee_model
 
 
 class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
@@ -10,34 +14,54 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
     port: int
     user: str
     password: str
-    database: str
+    database_name: str
     table_name: str
-    db_cnx: MySQLConnection = None
+    database_type: str
+    database_driver: str = None
+    models: Dict = {"employee": employee_model}
+    session: Session = None
 
-    def get_employees_whose_birthday_is(self, date: str) -> List[Employee]:
-        query = f"""
-SELECT *
-FROM {self.table_name}
-WHERE MONTH(birthday) = MONTH('{date}') AND DAY(birthday) = DAY('{date}');
-"""
-        cursor = self.db_cnx.cursor()
-        cursor.execute(query)
+    def get_employees_whose_birthday_is(self, date: str) -> List[employee_schema]:
+
+        result = self.session.query(self.models["employee"]).filter(
+            (func.month(self.models["employee"].birthday) == date[5:7]) &
+            (func.day(self.models["employee"].birthday) == date[8:10])
+        ).all()
+
+        self.session.close()
 
         return [
-            Employee(
-                first_name=employee[1],
-                last_name=employee[2],
-                email=employee[3],
-                birth_date=employee[4].strftime("%Y-%m-%d"),
+            employee_schema(
+                id=row.id,
+                first_name=row.first_name,
+                last_name=row.last_name,
+                email=row.email,
+                date_of_birth=row.birthday,
             )
-            for employee in cursor.fetchall()
+            for row in result
         ]
 
-    def connect(self):
-        self.db_cnx = connection.MySQLConnection(
-            host=self.host,
-            port=self.port,
-            user=self.user,
-            password=self.password,
-            database=self.database,
-        )
+    def make_connection_string(self) -> str:
+        driver = f"+{self.database_driver}" if self.database_driver else ""
+        return \
+            f"{self.database_type}{driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.database_name}"
+
+    def make_session(self):
+        self.session = sessionmaker(bind=(create_engine(self.make_connection_string())))()
+
+
+if __name__ == "__main__":
+    db = RelationalDataBaseManager(
+        host="localhost",
+        port=3306,
+        user="root",
+        password="B9Lz_XFEKh",
+        database_name="BirthdayGreetings",
+        table_name="Employees",
+        database_type="mysql",
+        database_driver="mysqlconnector",
+    )
+
+    db.make_session()
+    employees = db.get_employees_whose_birthday_is("2021-01-01")
+    print(employees)

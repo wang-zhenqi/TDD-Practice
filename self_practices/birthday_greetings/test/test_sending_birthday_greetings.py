@@ -10,7 +10,7 @@ def john_doe():
         first_name="John",
         last_name="Doe",
         email="john.doe@gmail.com",
-        birth_date="1990-01-01",
+        date_of_birth="1990-01-01",
     )
 
 

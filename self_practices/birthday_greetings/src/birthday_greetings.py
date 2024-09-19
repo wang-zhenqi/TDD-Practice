@@ -18,7 +18,7 @@ def generate_message(employee: Employee) -> EmailContent:
 if __name__ == "__main__":
     db_configs = read_yaml_file("../database_connection.yaml")
     db_cnx = RelationalDataBaseManager(**db_configs)
-    db_cnx.connect()
+    db_cnx.make_session()
 
     today = datetime.today().strftime("%Y-%m-%d")
 
