@@ -1,10 +1,9 @@
 import inspect
 import sys
-from typing import List, Any
-
-from pydantic import Field, create_model
+from typing import Any, List
 
 from Options.OptionsBase import OptionConfiguration, OptionDefinition
+from pydantic import Field, create_model
 
 UPPER_BOUND_OF_LIST_SIZE = 65535
 

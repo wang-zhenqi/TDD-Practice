@@ -1,8 +1,7 @@
-from typing import List, Dict
-
-from mysql.connector import connection
+from typing import List
 
 from employee import Employee
+from mysql.connector import connection
 
 
 class DatabaseRepository:

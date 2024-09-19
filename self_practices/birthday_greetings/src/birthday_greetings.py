@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from EmailContent import EmailContent
 from database_repository import DatabaseRepository
+from EmailContent import EmailContent
 from employee import Employee
 
 

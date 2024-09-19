@@ -1,4 +1,4 @@
-from fizzbuzz import NumberProcessor, ActionRules, Generator
+from fizzbuzz import ActionRules, Generator, NumberProcessor
 
 """
 # Tests for Fizz-Buzz Program

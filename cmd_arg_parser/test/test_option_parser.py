@@ -1,10 +1,7 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
-
-from Exceptions.InsufficientArgumentException import (
-    InsufficientArgumentException,
-)
+from Exceptions.InsufficientArgumentException import InsufficientArgumentException
 from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 from Options.Options import available_options
 from Parsers.OptionParser import OptionParser

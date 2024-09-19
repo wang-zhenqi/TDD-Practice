@@ -1,6 +1,6 @@
 import pytest
-
 from Options.Options import available_options
+
 from cmd_arg_parser.src.my_app import process_arguments
 
 """

@@ -1,16 +1,13 @@
 from typing import Any, List
 
+from Exceptions.ArgumentQuantityException import (
+    insufficient_arguments,
+    too_many_arguments,
+)
+from Exceptions.InsufficientArgumentException import InsufficientArgumentException
+from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 from pydantic import BaseModel, Field, field_validator
 from typing_extensions import Annotated
-
-from Exceptions.ArgumentQuantityException import (
-    too_many_arguments,
-    insufficient_arguments,
-)
-from Exceptions.InsufficientArgumentException import (
-    InsufficientArgumentException,
-)
-from Exceptions.TooManyArgumentsException import TooManyArgumentsException
 
 
 class OptionConfiguration(BaseModel):

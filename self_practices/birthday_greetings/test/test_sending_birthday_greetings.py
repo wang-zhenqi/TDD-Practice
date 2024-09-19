@@ -1,7 +1,6 @@
 import pytest
-
-from EmailContent import EmailContent
 from birthday_greetings import generate_message
+from EmailContent import EmailContent
 from employee import Employee
 
 

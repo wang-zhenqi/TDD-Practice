@@ -3,7 +3,8 @@
 
 ## Problem Description
 
-There's a database of employees and their birthdays. Write a program that sends a birthday greeting to all employees whose birthday is today.
+There's a database of employees and their birthdays. Write a program that sends a birthday greeting to all employees \
+whose birthday is today.
 
 A sample of the database is as below:
 
@@ -12,7 +13,8 @@ id | last_name | first_name | date_of_birth | email
 1  | Doe       | John       | 1990-01-01    | john.doe@gmail.com
 2  | Ann       | Mary       | 1994-11-22    | mary.ann@gmail.com
 
-The program should read the database and email all employees whose birthday is today. The email should contain the following message:
+The program should read the database and email all employees whose birthday is today. The email should contain the \
+following message:
 
 ```
 Subject: Happy Birthday!
@@ -22,12 +24,18 @@ Happy Birthday, dear <first_name>!
 
 ## Functionality Point
 
-- **Given** "Today's Date", **When** there are employees whose birthday is today, **Then** send a birthday greeting email to all employees
-    - **Given** a database, **When** the program reads the database, **Then** the program should retrieve the employees whose birthday is today
-        - **Given** a database, **When** it returns no employees whose birthday is today, **Then** the program should not send any email, print "No employees whose birthday is today"
-    - **Given** an employee's record, **When** the program sends a birthday greeting email, **Then** the email should contain the message described above.
-        - **Given** an employee's first_name, **When** the program sends a birthday greeting email, **Then** the email should contain the employee's first_name
-    - **Given** an employee's record, **When** the program sends a birthday greeting email, **Then** the email should be sent to the employee's email address
+- **Given** "Today's Date", **When** there are employees whose birthday is today, **Then** send a birthday greeting \
+email to all employees
+    - **Given** a database, **When** the program reads the database, **Then** the program should retrieve the \
+    employees whose birthday is today
+        - **Given** a database, **When** it returns no employees whose birthday is today, **Then** the program should \
+        not send any email, print "No employees whose birthday is today"
+    - **Given** an employee's record, **When** the program sends a birthday greeting email, **Then** the email should \
+    contain the message described above.
+        - **Given** an employee's first_name, **When** the program sends a birthday greeting email, **Then** the email \
+        should contain the employee's first_name
+    - **Given** an employee's record, **When** the program sends a birthday greeting email, **Then** the email should \
+    be sent to the employee's email address
 
 ## Tasks
 
@@ -50,7 +58,6 @@ Happy Birthday, dear <first_name>!
 from datetime import datetime
 
 import pytest
-
 from birthday_greetings import generate_message
 from database_repository import DatabaseRepository
 
