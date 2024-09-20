@@ -23,9 +23,9 @@ if __name__ == "__main__":
     today = datetime.today().strftime("%Y-%m-%d")
 
     employees = db_cnx.get_employees_whose_birthday_is(today)
-    for employee in employees:
-        message = generate_message(employee)
-        print(f"Sending email to {employee.email}")
+    for the_employee in employees:
+        message = generate_message(the_employee)
+        print(f"Sending email to {the_employee.email}")
         print(f"Subject: {message.subject}")
         print(f"\n{message.body}")
         print()

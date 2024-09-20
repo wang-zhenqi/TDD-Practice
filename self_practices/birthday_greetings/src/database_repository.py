@@ -1,7 +1,8 @@
+from datetime import datetime
 from typing import Dict, List
 
-from employee import Employee as employee_schema
-from models.employee import Employee as employee_model
+from employee import Employee as EmployeeSchema
+from models.employee import Employee as EmployeeModel
 from pydantic import BaseModel
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import Session, sessionmaker
@@ -16,16 +17,16 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
     table_name: str
     database_type: str
     database_driver: str = None
-    models: Dict = {"employee": employee_model}
+    models: Dict = {"employee": EmployeeModel}
     session: Session = None
 
-    def get_employees_whose_birthday_is(self, date: str) -> List[employee_schema]:
+    def get_employees_whose_birthday_is(self, date: datetime) -> List[EmployeeSchema]:
 
         result = (
             self.session.query(self.models["employee"])
             .filter(
-                (func.month(self.models["employee"].birthday) == date[5:7])
-                & (func.day(self.models["employee"].birthday) == date[8:10])
+                (func.month(self.models["employee"].birthday) == date.month)
+                & (func.day(self.models["employee"].birthday) == date.day)
             )
             .all()
         )
@@ -33,8 +34,7 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
         self.session.close()
 
         return [
-            employee_schema(
-                id=row.id,
+            EmployeeSchema(
                 first_name=row.first_name,
                 last_name=row.last_name,
                 email=row.email,

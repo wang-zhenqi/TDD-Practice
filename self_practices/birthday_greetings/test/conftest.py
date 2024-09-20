@@ -13,4 +13,4 @@ def db():
 
 @pytest.fixture(scope="module")
 def today():
-    return datetime.today().strftime("%Y-%m-%d")
+    return datetime.today()

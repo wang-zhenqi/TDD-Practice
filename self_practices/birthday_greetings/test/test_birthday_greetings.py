@@ -93,5 +93,5 @@ class TestBirthdayGreetings:
 
         mocker.patch.object(db, "session", mock_session)
 
-        employees = db.get_employees_whose_birthday_is("2024-09-11")
+        employees = db.get_employees_whose_birthday_is(datetime(2024, 9, 11))
         assert len(employees) == 0
