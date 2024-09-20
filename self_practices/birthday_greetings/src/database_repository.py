@@ -50,7 +50,7 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
         )
 
     def make_session(self):
-        self.session = sessionmaker(bind=(create_engine(self.make_connection_string())))()
+        self.session = sessionmaker(bind=create_engine(self.make_connection_string()))()
 
 
 if __name__ == "__main__":
