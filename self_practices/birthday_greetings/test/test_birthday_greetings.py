@@ -65,7 +65,6 @@ from models.employee import Employee
 class TestBirthdayGreetings:
     def test_should_send_email_when_there_are_employees_whose_birthday_is_today(self, mocker, db, today):
         mock_session = mocker.Mock()
-        mock_query = mocker.Mock()
         mock_result = [
             Employee(
                 id=1,
@@ -75,9 +74,7 @@ class TestBirthdayGreetings:
                 birthday=datetime(1990, 9, 19),
             )
         ]
-        mock_query.filter.return_value.all.return_value = mock_result
-        mock_session.query.return_value = mock_query
-
+        mock_session.query.return_value.filter.return_value.all.return_value = mock_result
         mocker.patch.object(db, "session", mock_session)
 
         employees = db.get_employees_whose_birthday_is(today)
@@ -91,10 +88,8 @@ class TestBirthdayGreetings:
 
     def test_should_not_send_email_when_there_are_no_employees_whose_birthday_is_today(self, mocker, db):
         mock_session = mocker.Mock()
-        mock_query = mocker.Mock()
         mock_result = []
-        mock_query.filter.return_value.all.return_value = mock_result
-        mock_session.query.return_value = mock_query
+        mock_session.query.return_value.filter.return_value.all.return_value = mock_result
 
         mocker.patch.object(db, "session", mock_session)
 
