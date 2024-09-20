@@ -13,7 +13,7 @@ class TestDatabaseRepository:
                 first_name="Peter",
                 last_name="Smith",
                 email="peter.smith@gmail.com",
-                birthday=datetime(1990, 9, 19),
+                birthday=datetime.today(),
             )
         ]
         mock_query.filter.return_value.all.return_value = mock_result
