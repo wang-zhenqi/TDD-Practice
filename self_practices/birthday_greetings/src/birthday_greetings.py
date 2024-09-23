@@ -20,7 +20,7 @@ if __name__ == "__main__":
     db_cnx = RelationalDataBaseManager(**db_configs)
     db_cnx.create_engine()
 
-    today = datetime.today().strftime("%Y-%m-%d")
+    today = datetime.today()
 
     employees = db_cnx.get_employees_whose_birthday_is(today)
     for the_employee in employees:

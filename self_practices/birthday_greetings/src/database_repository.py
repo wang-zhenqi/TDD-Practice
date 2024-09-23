@@ -20,6 +20,10 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
     models: Dict = {"employee": EmployeeModel}
     engine: Engine = None
 
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.create_engine()
+
     def get_employees_whose_birthday_is(self, date: datetime) -> List[EmployeeSchema]:
         with Session(bind=self.engine) as session:
             result = (
