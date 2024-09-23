@@ -60,7 +60,7 @@ from datetime import datetime
 from unittest.mock import patch
 
 from birthday_greetings import generate_message
-from models.employee import Employee
+from orms.models.employee import Employee
 
 
 class TestBirthdayGreetings:
@@ -77,7 +77,7 @@ class TestBirthdayGreetings:
         ]
         mock_session.query.return_value.filter.return_value.all.return_value = mock_result
 
-        with patch("database_repository.Session.__enter__", return_value=mock_session):
+        with patch("orms.relational_database.Session.__enter__", return_value=mock_session):
             employees = db.get_employees_whose_birthday_is(today)
             assert len(employees) == 1
 
@@ -92,6 +92,6 @@ class TestBirthdayGreetings:
         mock_result = []
         mock_session.query.return_value.filter.return_value.all.return_value = mock_result
 
-        with patch("database_repository.Session.__enter__", return_value=mock_session):
+        with patch("orms.relational_database.Session.__enter__", return_value=mock_session):
             employees = db.get_employees_whose_birthday_is(datetime(2024, 9, 11))
             assert len(employees) == 0

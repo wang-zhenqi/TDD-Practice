@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from database_repository import RelationalDataBaseManager
 from EmailContent import EmailContent
 from employee import Employee
+from orms.relational_database import RelationalDatabase
 from utils import read_yaml_file
 
 
@@ -17,7 +17,7 @@ def generate_message(employee: Employee) -> EmailContent:
 
 if __name__ == "__main__":
     db_configs = read_yaml_file("../database_connection.yaml")
-    db_cnx = RelationalDataBaseManager(**db_configs)
+    db_cnx = RelationalDatabase(**db_configs)
     db_cnx.create_engine()
 
     today = datetime.today()
