@@ -4,8 +4,8 @@ from typing import Dict, List
 from employee import Employee as EmployeeSchema
 from models.employee import Employee as EmployeeModel
 from pydantic import BaseModel
-from sqlalchemy import create_engine, func
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import Engine, create_engine, func
+from sqlalchemy.orm import Session
 
 
 class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
@@ -18,20 +18,18 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
     database_type: str
     database_driver: str = None
     models: Dict = {"employee": EmployeeModel}
-    session: Session = None
+    engine: Engine = None
 
     def get_employees_whose_birthday_is(self, date: datetime) -> List[EmployeeSchema]:
-
-        result = (
-            self.session.query(self.models["employee"])
-            .filter(
-                (func.month(self.models["employee"].birthday) == date.month)
-                & (func.day(self.models["employee"].birthday) == date.day)
+        with Session(bind=self.engine) as session:
+            result = (
+                session.query(self.models["employee"])
+                .filter(
+                    (func.month(self.models["employee"].birthday) == date.month)
+                    & (func.day(self.models["employee"].birthday) == date.day)
+                )
+                .all()
             )
-            .all()
-        )
-
-        self.session.close()
 
         return [
             EmployeeSchema(
@@ -49,8 +47,8 @@ class RelationalDataBaseManager(BaseModel, arbitrary_types_allowed=True):
             f"{self.database_type}{driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.database_name}"
         )
 
-    def make_session(self):
-        self.session = sessionmaker(bind=create_engine(self.make_connection_string()))()
+    def create_engine(self):
+        self.engine = create_engine(self.make_connection_string())
 
 
 if __name__ == "__main__":
@@ -65,6 +63,6 @@ if __name__ == "__main__":
         database_driver="mysqlconnector",
     )
 
-    db.make_session()
-    employees = db.get_employees_whose_birthday_is("2021-01-01")
+    db.create_engine()
+    employees = db.get_employees_whose_birthday_is(datetime(2021, 1, 1))
     print(employees)

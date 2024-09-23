@@ -1,4 +1,5 @@
 from datetime import datetime
+from unittest.mock import patch
 
 from models.employee import Employee
 
@@ -17,9 +18,7 @@ class TestDatabaseRepository:
         ]
         mock_session.query.return_value.filter.return_value.all.return_value = mock_result
 
-        mocker.patch.object(db, "session", mock_session)
-        db.session.query.return_value.filter.return_value.all.return_value = mock_result
-
-        employees = db.get_employees_whose_birthday_is(today)
-        assert len(employees) == 1
-        assert employees[0].first_name == "Peter"
+        with patch("database_repository.Session.__enter__", return_value=mock_session):
+            employees = db.get_employees_whose_birthday_is(today)
+            assert len(employees) == 1
+            assert employees[0].first_name == "Peter"

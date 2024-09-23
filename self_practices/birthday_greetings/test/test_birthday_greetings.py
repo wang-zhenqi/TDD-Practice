@@ -57,6 +57,7 @@ today.
 - [ ] Make it possible to get data from file
 """
 from datetime import datetime
+from unittest.mock import patch
 
 from birthday_greetings import generate_message
 from models.employee import Employee
@@ -75,10 +76,10 @@ class TestBirthdayGreetings:
             )
         ]
         mock_session.query.return_value.filter.return_value.all.return_value = mock_result
-        mocker.patch.object(db, "session", mock_session)
 
-        employees = db.get_employees_whose_birthday_is(today)
-        assert len(employees) == 1
+        with patch("database_repository.Session.__enter__", return_value=mock_session):
+            employees = db.get_employees_whose_birthday_is(today)
+            assert len(employees) == 1
 
         email_contents = [generate_message(employee) for employee in employees]
         assert len(email_contents) == 1
@@ -91,7 +92,6 @@ class TestBirthdayGreetings:
         mock_result = []
         mock_session.query.return_value.filter.return_value.all.return_value = mock_result
 
-        mocker.patch.object(db, "session", mock_session)
-
-        employees = db.get_employees_whose_birthday_is(datetime(2024, 9, 11))
-        assert len(employees) == 0
+        with patch("database_repository.Session.__enter__", return_value=mock_session):
+            employees = db.get_employees_whose_birthday_is(datetime(2024, 9, 11))
+            assert len(employees) == 0
